@@ -3,29 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amity Placement Intelligence System</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<title>Amity Angel – Placement Intelligence OS</title>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body{
 margin:0;
 font-family:'Inter',sans-serif;
-background:#f4f6f9;
+background:#0f1117;
+color:#e6edf3;
 }
 
 header{
-background:#1e3c72;
-color:white;
-padding:18px 25px;
+background:#161b22;
+padding:15px 25px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+border-bottom:1px solid #30363d;
 }
 
 header h1{
 margin:0;
 font-size:18px;
+color:#58a6ff;
 }
 
 button{
@@ -34,160 +37,190 @@ border:none;
 padding:8px 14px;
 border-radius:6px;
 font-weight:600;
+background:#21262d;
+color:#e6edf3;
 }
 
-.primary{
-background:#1e3c72;
-color:white;
-}
-
-.secondary{
-background:#e0e0e0;
-}
+button.primary{background:#238636;}
 
 .container{
-padding:30px;
-max-width:1100px;
+padding:25px;
+max-width:1200px;
 margin:auto;
 }
 
 .card{
-background:white;
-padding:20px;
+background:#161b22;
+padding:18px;
 border-radius:8px;
-box-shadow:0 6px 20px rgba(0,0,0,0.08);
 margin-bottom:20px;
+border:1px solid #30363d;
 }
 
-input,select{
+input{
 width:100%;
 padding:8px;
-margin:8px 0;
+margin:6px 0;
 border-radius:6px;
-border:1px solid #ccc;
+border:1px solid #30363d;
+background:#0d1117;
+color:#e6edf3;
 }
 
-.hidden{
-display:none;
+.hidden{display:none;}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
 }
 
-.badge{
-padding:4px 8px;
-border-radius:4px;
-font-size:12px;
+.metric{
+background:#161b22;
+padding:15px;
+border-radius:8px;
+border:1px solid #30363d;
+}
+
+.metric h3{
+margin:0;
+font-size:13px;
+color:#58a6ff;
+}
+
+.metric p{
+font-size:18px;
+margin:5px 0 0 0;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+}
+
+.table th,.table td{
+border:1px solid #30363d;
+padding:8px;
+font-size:13px;
+}
+
+/* AI Panel */
+#aiToggle{
+position:fixed;
+bottom:20px;
+right:20px;
+width:60px;
+height:60px;
+border-radius:50%;
+background:#58a6ff;
 color:white;
+font-size:22px;
 }
 
-.dream{background:#ff9800;}
-.mass{background:#2a9df4;}
-.super{background:#e91e63;}
-.open{background:#4caf50;}
-.closed{background:#f44336;}
-
-.progress{
-height:10px;
-background:#ddd;
-border-radius:5px;
-overflow:hidden;
+#aiPanel{
+position:fixed;
+bottom:90px;
+right:20px;
+width:340px;
+height:480px;
+background:#161b22;
+border:1px solid #30363d;
+border-radius:10px;
+display:none;
+flex-direction:column;
 }
 
-.progress-bar{
-height:10px;
-background:#1e3c72;
-width:0%;
+#chatArea{
+flex:1;
+overflow-y:auto;
+padding:10px;
+font-size:13px;
 }
 
 footer{
-background:#1e3c72;
-color:white;
 text-align:center;
 padding:20px;
-margin-top:40px;
+border-top:1px solid #30363d;
+margin-top:30px;
+font-size:12px;
+color:#8b949e;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>Amity University Madhya Pradesh | Placement Intelligence System</h1>
-<div id="authSection">
-<button class="primary" onclick="login('student')">Student Login</button>
-<button class="secondary" onclick="login('faculty')">Faculty Login</button>
+<h1>Amity Angel – Placement Intelligence OS</h1>
+<div>
+<button onclick="login('student')">Student</button>
+<button onclick="login('faculty')">Faculty</button>
 </div>
 </header>
 
+<!-- AI BUTTON -->
+<button id="aiToggle">🤖</button>
+
+<!-- AI PANEL -->
+<div id="aiPanel">
+<div style="padding:10px;border-bottom:1px solid #30363d;">
+<strong>Amity Angel Assistant</strong>
+</div>
+<div id="chatArea"></div>
+<div style="padding:10px;border-top:1px solid #30363d;">
+<input type="text" id="aiInput" placeholder="Ask about placement..." style="width:70%;">
+<button onclick="sendMessage()">Send</button>
+</div>
+</div>
+
 <div class="container">
 
-<!-- STUDENT DASHBOARD -->
+<!-- STUDENT -->
 <div id="studentDashboard" class="hidden">
 
 <div class="card">
-<h3>Profile Intelligence</h3>
-<input type="number" id="cgpa" placeholder="Enter CGPA">
-<input type="number" id="backlogs" placeholder="Number of Backlogs">
+<h2>Student Profile</h2>
+<input type="number" id="cgpa" placeholder="CGPA">
+<input type="number" id="backlogs" placeholder="Backlogs">
 <input type="text" id="skills" placeholder="Skills (comma separated)">
-<input type="number" id="projects" placeholder="Number of Projects">
-<button class="primary" onclick="calculateScore()">Generate Placement Score</button>
-<p id="scoreText"></p>
-<div class="progress"><div class="progress-bar" id="scoreBar"></div></div>
+<input type="number" id="projects" placeholder="Projects">
+<input type="number" id="certificates" placeholder="Certificates">
+<button class="primary" onclick="analyzeStudent()">Analyze</button>
+</div>
+
+<div id="studentReport" class="hidden">
+<div class="grid">
+<div class="metric"><h3>Readiness</h3><p id="readinessScore"></p></div>
+<div class="metric"><h3>Risk</h3><p id="riskLevel"></p></div>
+<div class="metric"><h3>Mass</h3><p id="massProb"></p></div>
+<div class="metric"><h3>Dream</h3><p id="dreamProb"></p></div>
 </div>
 
 <div class="card">
-<h3>Company Explorer</h3>
-<input type="text" id="search" placeholder="Search company">
-<select id="typeFilter">
-<option value="All">All Types</option>
-<option value="Dream">Dream</option>
-<option value="Mass">Mass</option>
-<option value="Super">Super Dream</option>
-</select>
-<button class="primary" onclick="filterCompanies()">Apply Filter</button>
-<div id="companyList"></div>
+<h3>Company Match</h3>
+<table class="table">
+<thead>
+<tr><th>Company</th><th>Type</th><th>Match %</th></tr>
+</thead>
+<tbody id="companyMatchTable"></tbody>
+</table>
+</div>
+</div>
 </div>
 
-<div class="card">
-<h3>Active Drives</h3>
-<p>Amazon Drive <span class="badge open">Open</span> | Deadline: 10 Days</p>
-<p>TCS Drive <span class="badge closed">Closed</span></p>
-</div>
-
-<div class="card">
-<h3>Fraud & Safety Center</h3>
-<ul>
-<li>Never pay money for job offers.</li>
-<li>Verify HR email domain.</li>
-<li>Check official website before applying.</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>Placement Analytics</h3>
-<canvas id="pieChart"></canvas>
-</div>
-
-</div>
-
-<!-- FACULTY DASHBOARD -->
+<!-- FACULTY -->
 <div id="facultyDashboard" class="hidden">
 
 <div class="card">
-<h3>Faculty Control Panel</h3>
-<p>Total Students: 320</p>
-<p>Eligible Students: 210</p>
-<p>Average Package: ₹6.5 LPA</p>
+<h3>Batch Overview</h3>
+<div class="grid">
+<div class="metric"><h3>Total</h3><p id="totalStudents"></p></div>
+<div class="metric"><h3>Avg CGPA</h3><p id="avgCGPA"></p></div>
+</div>
 </div>
 
 <div class="card">
-<h3>Student Eligibility Filter</h3>
-<input type="number" placeholder="Minimum CGPA">
-<button class="primary">Generate Eligible List</button>
-</div>
-
-<div class="card">
-<h3>Faculty Discussion Hub</h3>
-<p>Shared Drive Links</p>
-<p>Company List Discussion</p>
-<p>Data Sharing Panel</p>
+<canvas id="cgpaChart"></canvas>
 </div>
 
 </div>
@@ -195,71 +228,110 @@ margin-top:40px;
 </div>
 
 <footer>
-<strong>Designer Info</strong><br>
-Haridutt Sharma<br>
-B.Tech CSE | Semester 4<br>
-Amity University Madhya Pradesh
+Designer: Haridutt Sharma | B.Tech CSE | Amity University Madhya Pradesh
 </footer>
 
 <script>
 
-let companies=[
-{name:"Amazon",type:"Super",minCGPA:7.5},
-{name:"TCS",type:"Mass",minCGPA:6},
-{name:"Infosys",type:"Mass",minCGPA:6},
-{name:"Palo Alto",type:"Dream",minCGPA:8}
+const students=[
+{name:"A",cgpa:8.2},
+{name:"B",cgpa:6.5},
+{name:"C",cgpa:7.8},
+{name:"D",cgpa:5.9},
+{name:"E",cgpa:9.1}
+];
+
+const companies=[
+{name:"Amazon",type:"Super",min:8},
+{name:"Infosys",type:"Mass",min:6},
+{name:"Palo Alto",type:"Dream",min:7.5}
 ];
 
 function login(role){
-document.getElementById("authSection").style.display="none";
-if(role=="student"){
+document.getElementById("studentDashboard").classList.add("hidden");
+document.getElementById("facultyDashboard").classList.add("hidden");
+
+if(role==="student"){
 document.getElementById("studentDashboard").classList.remove("hidden");
 }
-if(role=="faculty"){
+
+if(role==="faculty"){
 document.getElementById("facultyDashboard").classList.remove("hidden");
+loadFaculty();
 }
 }
 
-function calculateScore(){
+function analyzeStudent(){
 let cgpa=parseFloat(document.getElementById("cgpa").value)||0;
 let back=parseInt(document.getElementById("backlogs").value)||0;
-let proj=parseInt(document.getElementById("projects").value)||0;
 
-let score=(cgpa*10)+(proj*5)-(back*5);
-if(score>100) score=100;
-if(score<0) score=0;
+let readiness=Math.max(0,Math.min(100,(cgpa*10)-(back*8)));
+let risk=cgpa>=8?"Low":"Moderate";
 
-document.getElementById("scoreText").innerHTML="Placement Readiness Score: "+score+"%";
-document.getElementById("scoreBar").style.width=score+"%";
-}
+document.getElementById("readinessScore").innerText=readiness+"%";
+document.getElementById("riskLevel").innerText=risk;
+document.getElementById("massProb").innerText=(readiness+10)+"%";
+document.getElementById("dreamProb").innerText=(readiness-10)+"%";
 
-function filterCompanies(){
-let search=document.getElementById("search").value.toLowerCase();
-let type=document.getElementById("typeFilter").value;
-
-let list=document.getElementById("companyList");
-list.innerHTML="";
-
+let table="";
 companies.forEach(c=>{
-if((c.name.toLowerCase().includes(search)) &&
-(type=="All"||c.type==type)){
-list.innerHTML+=`<p>${c.name} (${c.type}) | Min CGPA: ${c.minCGPA}</p>`;
-}
+let match=cgpa>=c.min?readiness:readiness-20;
+table+=`<tr><td>${c.name}</td><td>${c.type}</td><td>${match}%</td></tr>`;
 });
+document.getElementById("companyMatchTable").innerHTML=table;
+
+document.getElementById("studentReport").classList.remove("hidden");
 }
 
-new Chart(document.getElementById('pieChart'),{
-type:'pie',
+function loadFaculty(){
+document.getElementById("totalStudents").innerText=students.length;
+let avg=(students.reduce((a,b)=>a+b.cgpa,0)/students.length).toFixed(2);
+document.getElementById("avgCGPA").innerText=avg;
+
+new Chart(document.getElementById("cgpaChart"),{
+type:'bar',
 data:{
-labels:['Dream','Mass','Super Dream'],
+labels:students.map(s=>s.name),
 datasets:[{
-data:[5,10,3],
-backgroundColor:['#ff9800','#2a9df4','#e91e63']
+label:"CGPA",
+data:students.map(s=>s.cgpa),
+backgroundColor:"#58a6ff"
 }]
 }
 });
+}
+
+/* AI SYSTEM */
+document.getElementById("aiToggle").onclick=function(){
+let panel=document.getElementById("aiPanel");
+panel.style.display=panel.style.display==="flex"?"none":"flex";
+panel.style.display="flex";
+};
+
+function sendMessage(){
+let input=document.getElementById("aiInput");
+let msg=input.value.trim();
+if(!msg) return;
+
+let chat=document.getElementById("chatArea");
+chat.innerHTML+=`<div style="color:#58a6ff;">You: ${msg}</div>`;
+
+let reply="Ask about CGPA, skills, dream companies or resume.";
+
+if(msg.includes("cgpa")){
+reply="Maintain 7.5+ for Dream and 8+ for Super Dream companies.";
+}
+if(msg.includes("dream")){
+reply="Dream companies require strong DSA + 7.5+ CGPA.";
+}
+
+chat.innerHTML+=`<div>Angel: ${reply}</div><br>`;
+chat.scrollTop=chat.scrollHeight;
+input.value="";
+}
 
 </script>
-
 </body>
 </html>
+
+
