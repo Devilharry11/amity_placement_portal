@@ -3,338 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amity Angel – Placement Intelligence OS</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Amity Angel 3.0 – Placement Intelligence OS</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
-margin:0;
-font-family:'Inter',sans-serif;
-background:#0f1117;
-color:#e6edf3;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
-#loginScreen{
-height:100vh;
+body{background:#f4f6f9;color:#111;}
+.hidden{display:none;}
+
+header{
+position:fixed;
+top:0;width:100%;
+background:#ffffff;
+border-bottom:1px solid #e6e6e6;
+padding:15px 30px;
 display:flex;
-justify-content:center;
+justify-content:space-between;
 align-items:center;
-flex-direction:column;
+z-index:1000;
 }
 
-.loginBox{
-background:#161b22;
-padding:40px;
-border-radius:10px;
-width:320px;
-text-align:center;
-border:1px solid #30363d;
-}
+header h1{font-size:18px;font-weight:600;}
 
-input{
-width:100%;
-padding:10px;
-margin:10px 0;
-border-radius:6px;
-border:1px solid #30363d;
-background:#0d1117;
-color:white;
-}
-
-button{
-padding:10px 16px;
-border:none;
-border-radius:6px;
-background:#238636;
-color:white;
-cursor:pointer;
-}
-
-#app{
-display:none;
-height:100vh;
-display:flex;
-}
+.main{display:flex;margin-top:70px;min-height:100vh;}
 
 .sidebar{
-width:220px;
-background:#161b22;
+width:240px;
+background:#0f172a;
+color:white;
 padding:20px;
-border-right:1px solid #30363d;
-}
-
-.sidebar h2{
-color:#58a6ff;
-font-size:16px;
+display:flex;
+flex-direction:column;
 }
 
 .sidebar button{
-width:100%;
-margin:8px 0;
-background:#21262d;
+background:none;border:none;color:white;
+text-align:left;padding:12px;
+margin-bottom:8px;cursor:pointer;
+border-radius:6px;font-size:14px;
 }
 
-.main{
-flex:1;
-padding:25px;
-overflow-y:auto;
-}
+.sidebar button:hover{background:#1e293b;}
+
+.content{flex:1;padding:40px;}
 
 .card{
-background:#161b22;
-padding:20px;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
 margin-bottom:20px;
-border-radius:8px;
-border:1px solid #30363d;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
+input,select{
+width:100%;padding:10px;margin:8px 0;
+border-radius:8px;border:1px solid #ddd;font-size:14px;
 }
 
-.metric{
-background:#0d1117;
-padding:15px;
-border-radius:8px;
-border:1px solid #30363d;
+button.primary{
+background:#2563eb;color:white;border:none;
+padding:10px 16px;border-radius:8px;
+cursor:pointer;font-weight:500;
 }
 
-.metric h3{
-margin:0;
-font-size:13px;
-color:#58a6ff;
-}
-
-.metric p{
-margin:6px 0 0 0;
-font-size:18px;
-}
-
-.hidden{display:none;}
-
-.table{
-width:100%;
-border-collapse:collapse;
-}
-
-.table th,.table td{
-border:1px solid #30363d;
-padding:8px;
-font-size:13px;
-}
-
-#chatBox{
-position:fixed;
-bottom:20px;
-right:20px;
-width:350px;
-height:420px;
-background:#161b22;
-border-radius:10px;
-display:flex;
-flex-direction:column;
-border:1px solid #30363d;
-}
-
-#chatHeader{
-background:#21262d;
-padding:10px;
-font-weight:600;
-}
-
-#messages{
-flex:1;
-padding:10px;
+.chat-box{
+border:1px solid #ddd;
+height:300px;
 overflow-y:auto;
-font-size:13px;
-}
-
-.user{color:#58a6ff;margin:5px 0;}
-.bot{color:#e6edf3;margin:5px 0;}
-
-#chatInput{
-display:flex;
 padding:10px;
-background:#21262d;
+margin-bottom:10px;
+background:#f9fafb;
 }
 
-#chatInput input{
-flex:1;
-margin:0;
+.chat-msg{margin-bottom:10px;font-size:14px;}
+
+footer{
+text-align:center;padding:25px;
+border-top:1px solid #e6e6e6;
+font-size:13px;color:#666;
 }
 </style>
 </head>
 
 <body>
 
-<div id="loginScreen">
-<div class="loginBox">
-<h2>Amity Angel Login</h2>
-<input id="loginId" placeholder="ID">
-<input id="loginPass" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p style="font-size:12px;margin-top:10px;">
-Student → student / 1234<br>
-Faculty → faculty / 1234
-</p>
+<header>
+<h1>Amity Angel 3.0 – Placement Intelligence OS</h1>
+<div id="logoutBtn" class="hidden">
+<button class="primary" onclick="logout()">Logout</button>
+</div>
+</header>
+
+<!-- LOGIN -->
+<div id="loginPage" style="margin-top:120px;text-align:center;">
+<h2>Secure University Access</h2>
+<div style="max-width:350px;margin:30px auto;">
+<select id="role">
+<option value="student">Student</option>
+<option value="faculty">Faculty</option>
+</select>
+
+<input type="text" id="loginID" placeholder="Enrollment ID / Faculty Email">
+<input type="password" id="password" placeholder="Password">
+<button class="primary" onclick="login()">Login</button>
+<p id="loginError" style="color:red;margin-top:10px;"></p>
 </div>
 </div>
 
-<div id="app">
-<div class="sidebar">
-<h2>Amity Angel</h2>
-<button onclick="show('dashboard')">Dashboard</button>
-<button onclick="show('company')">Company Engine</button>
-<button onclick="show('mock')">Mock Test</button>
-<button onclick="show('facultyPanel')">Faculty Panel</button>
-<button onclick="show('resources')">Resources</button>
-</div>
-
-<div class="main">
-
-<div id="dashboard">
-<div class="card">
-<h3>Student Intelligence</h3>
-<input id="cgpa" placeholder="CGPA">
-<input id="skills" placeholder="Skills (comma separated)">
-<button onclick="analyze()">Analyze</button>
-</div>
-
-<div class="grid">
-<div class="metric"><h3>Readiness</h3><p id="readiness"></p></div>
-<div class="metric"><h3>Risk</h3><p id="risk"></p></div>
-<div class="metric"><h3>Dream Probability</h3><p id="dream"></p></div>
+<!-- SYSTEM -->
+<div id="system" class="hidden main">
+<div class="sidebar" id="sidebar"></div>
+<div class="content">
+<div id="dashboard"></div>
 </div>
 </div>
 
-<div id="company" class="hidden">
-<div class="card">
-<h3>Company Eligibility</h3>
-<table class="table">
-<thead>
-<tr><th>Company</th><th>Min CGPA</th><th>Status</th></tr>
-</thead>
-<tbody id="companyTable"></tbody>
-</table>
-</div>
-</div>
-
-<div id="mock" class="hidden">
-<div class="card">
-<h3>Mock Test</h3>
-<p>Q1: 2+2?</p>
-<input id="mockAns">
-<button onclick="checkMock()">Submit</button>
-<p id="mockResult"></p>
-</div>
-</div>
-
-<div id="facultyPanel" class="hidden">
-<div class="card">
-<h3>Batch Analytics</h3>
-<div class="grid">
-<div class="metric"><h3>Total Students</h3><p>120</p></div>
-<div class="metric"><h3>Avg CGPA</h3><p>7.2</p></div>
-<div class="metric"><h3>Risk %</h3><p>18%</p></div>
-</div>
-</div>
-</div>
-
-<div id="resources" class="hidden">
-<div class="card">
-<h3>Preparation Resources</h3>
-<ul>
-<li>DSA Playlist – YouTube</li>
-<li>Resume Templates</li>
-<li>Mock Interview Guide</li>
-<li>Fraud Internship Awareness</li>
-</ul>
-</div>
-</div>
-
-</div>
-</div>
-
-<div id="chatBox">
-<div id="chatHeader">Amity Angel AI</div>
-<div id="messages"></div>
-<div id="chatInput">
-<input id="chatMsg" placeholder="Ask about placements...">
-<button onclick="chat()">Send</button>
-</div>
-</div>
+<footer>
+Amity Angel 3.0 Demo Build | AI + Analytics + Mock + Explorer
+</footer>
 
 <script>
 
-function login(){
-let id=document.getElementById("loginId").value;
-let pass=document.getElementById("loginPass").value;
+/* ===== DEMO DATABASE ===== */
 
-if((id==="student"||id==="faculty") && pass==="1234"){
-document.getElementById("loginScreen").style.display="none";
-document.getElementById("app").style.display="flex";
-}
-else{
-alert("Invalid credentials");
-}
-}
-
-function show(section){
-document.querySelectorAll('.main > div').forEach(d=>d.classList.add("hidden"));
-document.getElementById(section).classList.remove("hidden");
-}
-
-const companies=[
-{name:"Amazon",min:8},
-{name:"TCS",min:6},
-{name:"Infosys",min:6.5},
-{name:"Google",min:8.5}
+const students=[
+{id:"AUMP24CSE001",password:"1234",name:"Rahul",branch:"CSE",cgpa:8.2},
+{id:"AUMP24IT002",password:"1234",name:"Aman",branch:"IT",cgpa:7.1}
 ];
 
+const faculty=[
+{email:"tpo@amity.edu",password:"admin123"}
+];
+
+const companies=[
+{name:"Amazon",min:8,type:"Super Dream",package:34},
+{name:"Microsoft",min:8.5,type:"Super Dream",package:40},
+{name:"TCS",min:6,type:"Mass",package:4}
+];
+
+/* ===== LOGIN ===== */
+
+function login(){
+let role=document.getElementById("role").value;
+let id=document.getElementById("loginID").value.trim();
+let pass=document.getElementById("password").value.trim();
+
+if(role==="student"){
+let user=students.find(s=>s.id===id && s.password===pass);
+if(user){initSystem("student",user);}
+else{document.getElementById("loginError").innerText="Invalid Student";}
+}
+
+if(role==="faculty"){
+let user=faculty.find(f=>f.email===id && f.password===pass);
+if(user){initSystem("faculty",user);}
+else{document.getElementById("loginError").innerText="Invalid Faculty";}
+}
+}
+
+function logout(){location.reload();}
+
+function initSystem(role,user){
+document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("system").classList.remove("hidden");
+document.getElementById("logoutBtn").classList.remove("hidden");
+loadSidebar(role,user);
+loadHome(role,user);
+}
+
+/* ===== SIDEBAR ===== */
+
+function loadSidebar(role,user){
+let sidebar=document.getElementById("sidebar");
+
+if(role==="student"){
+sidebar.innerHTML=`
+<button onclick="loadHome('student')">Dashboard</button>
+<button onclick="loadAnalyzer()">Profile Analyzer</button>
+<button onclick="loadCompanies()">Company Explorer</button>
+<button onclick="loadMock()">Mock Test</button>
+<button onclick="loadAI()">AI Assistant</button>
+`;
+}
+
+if(role==="faculty"){
+sidebar.innerHTML=`
+<button onclick="loadFaculty()">Batch Analytics</button>
+<button onclick="loadAI()">AI Assistant</button>
+`;
+}
+}
+
+/* ===== STUDENT DASHBOARD ===== */
+
+function loadHome(role,user){
+document.getElementById("dashboard").innerHTML=`
+<div class="card">
+<h2>Welcome ${user.name}</h2>
+<p>Branch: ${user.branch}</p>
+<p>Current CGPA: ${user.cgpa}</p>
+</div>
+`;
+}
+
+/* ===== PROFILE ANALYZER ===== */
+
+function loadAnalyzer(){
+document.getElementById("dashboard").innerHTML=`
+<div class="card">
+<h2>Profile Analyzer</h2>
+<input type="number" id="cgpaInput" placeholder="CGPA">
+<input type="number" id="projectsInput" placeholder="Projects">
+<input type="number" id="certInput" placeholder="Certifications">
+<button class="primary" onclick="analyze()">Analyze</button>
+<div id="result"></div>
+</div>
+`;
+}
+
 function analyze(){
-let cgpa=parseFloat(document.getElementById("cgpa").value)||0;
+let cgpa=parseFloat(document.getElementById("cgpaInput").value)||0;
+let score=Math.min(100,cgpa*10);
+document.getElementById("result").innerHTML=`<p>Readiness Score: ${score}%</p>`;
+}
 
-let readiness=Math.min(100,cgpa*10);
-let risk=cgpa>=7?"Low":"High";
-let dream=Math.max(0,readiness-20);
+/* ===== COMPANY EXPLORER ===== */
 
-document.getElementById("readiness").innerText=readiness+"%";
-document.getElementById("risk").innerText=risk;
-document.getElementById("dream").innerText=dream+"%";
-
-let table="";
+function loadCompanies(){
+let html=`<div class="card"><h2>Company Explorer</h2>`;
 companies.forEach(c=>{
-let status=cgpa>=c.min?"Eligible":"Not Eligible";
-table+=`<tr><td>${c.name}</td><td>${c.min}</td><td>${status}</td></tr>`;
+html+=`<p><b>${c.name}</b> | Min CGPA: ${c.min} | Package: ₹${c.package} LPA</p>`;
 });
-document.getElementById("companyTable").innerHTML=table;
+html+=`</div>`;
+document.getElementById("dashboard").innerHTML=html;
+}
+
+/* ===== MOCK TEST ===== */
+
+function loadMock(){
+document.getElementById("dashboard").innerHTML=`
+<div class="card">
+<h2>Mock Test</h2>
+<p>Q1: Time complexity of Binary Search?</p>
+<select id="ans">
+<option>O(n)</option>
+<option>O(log n)</option>
+<option>O(n^2)</option>
+</select>
+<button class="primary" onclick="checkMock()">Submit</button>
+<div id="mockResult"></div>
+</div>
+`;
 }
 
 function checkMock(){
-let ans=document.getElementById("mockAns").value;
-document.getElementById("mockResult").innerText=
-ans=="4"?"Correct ✅":"Wrong ❌";
+let ans=document.getElementById("ans").value;
+if(ans==="O(log n)"){
+document.getElementById("mockResult").innerHTML="<p style='color:green;'>Correct</p>";
+}else{
+document.getElementById("mockResult").innerHTML="<p style='color:red;'>Wrong</p>";
+}
 }
 
-function chat(){
-let msg=document.getElementById("chatMsg").value;
-let box=document.getElementById("messages");
-box.innerHTML+=`<div class="user">You: ${msg}</div>`;
+/* ===== AI ASSISTANT (DEMO) ===== */
 
-let reply="Focus on CGPA 7.5+, strong DSA and 2 projects.";
-if(msg.toLowerCase().includes("dream")) reply="Dream companies require 7.5+ CGPA and strong coding.";
-if(msg.toLowerCase().includes("risk")) reply="Improve CGPA and certifications to reduce placement risk.";
+function loadAI(){
+document.getElementById("dashboard").innerHTML=`
+<div class="card">
+<h2>Amity Angel AI Assistant</h2>
+<div class="chat-box" id="chat"></div>
+<input type="text" id="userInput" placeholder="Ask placement question...">
+<button class="primary" onclick="sendMsg()">Send</button>
+</div>
+`;
+}
 
-setTimeout(()=>{
-box.innerHTML+=`<div class="bot">Angel: ${reply}</div>`;
-box.scrollTop=box.scrollHeight;
-},400);
+function sendMsg(){
+let input=document.getElementById("userInput").value;
+let chat=document.getElementById("chat");
+chat.innerHTML+=`<div class="chat-msg"><b>You:</b> ${input}</div>`;
+
+let reply="Focus on DSA, aptitude and core subjects.";
+if(input.toLowerCase().includes("cgpa")){
+reply="Maintain CGPA above 7.5 for good companies.";
+}
+chat.innerHTML+=`<div class="chat-msg"><b>AI:</b> ${reply}</div>`;
+document.getElementById("userInput").value="";
+}
+
+/* ===== FACULTY PANEL ===== */
+
+function loadFaculty(){
+let avg=(students.reduce((a,b)=>a+b.cgpa,0)/students.length).toFixed(2);
+document.getElementById("dashboard").innerHTML=`
+<div class="card">
+<h2>Batch Analytics</h2>
+<p>Total Students: ${students.length}</p>
+<p>Average CGPA: ${avg}</p>
+</div>
+`;
 }
 
 </script>
 
 </body>
 </html>
+
+
