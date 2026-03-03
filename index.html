@@ -3,31 +3,32 @@
 <head>
 <title>Amity Placement Intelligence Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+*{box-sizing:border-box;}
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background:#f4f7fb;
-transition:0.3s;
+background:linear-gradient(-45deg,#1e3c72,#2a5298,#4caf50,#0f2027);
+background-size:400% 400%;
+animation:gradient 12s ease infinite;
+transition:0.4s;
+}
+@keyframes gradient{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
-.dark{
-background:#121212;
-color:white;
-}
+.dark{background:#121212;color:white;}
 
 .nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:linear-gradient(135deg,#1e3c72,#2a5298);
+background:#1e3c72;
 padding:15px 30px;
 color:white;
 position:sticky;
@@ -44,9 +45,7 @@ cursor:pointer;
 font-size:15px;
 }
 
-.nav-links button:hover{
-text-decoration:underline;
-}
+.nav-links button:hover{text-decoration:underline;}
 
 .toggle{
 cursor:pointer;
@@ -60,20 +59,17 @@ font-size:13px;
 .hero{
 text-align:center;
 padding:80px 20px;
-background:linear-gradient(135deg,#1e3c72,#2a5298);
 color:white;
+animation:fadeDown 1s ease;
 }
 
-.hero h1{
-font-size:40px;
-margin:0;
+@keyframes fadeDown{
+from{opacity:0;transform:translateY(-40px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-.hero p{
-margin:15px 0;
-font-size:18px;
-opacity:0.9;
-}
+.hero h1{font-size:42px;margin:0;}
+.hero p{margin:15px 0;font-size:18px;}
 
 .hero button{
 margin:10px;
@@ -84,16 +80,8 @@ cursor:pointer;
 font-weight:600;
 }
 
-.primary-btn{
-background:white;
-color:#1e3c72;
-}
-
-.secondary-btn{
-background:transparent;
-border:2px solid white;
-color:white;
-}
+.primary-btn{background:white;color:#1e3c72;}
+.secondary-btn{background:transparent;border:2px solid white;color:white;}
 
 .section{
 padding:50px 20px;
@@ -102,22 +90,25 @@ margin:auto;
 display:none;
 }
 
-.active{
-display:block;
-}
+.active{display:block;}
 
 .card{
 background:white;
 padding:20px;
 margin:20px 0;
 border-radius:16px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
 transition:0.3s;
+opacity:0;
+transform:translateY(20px);
+animation:fadeCard 0.6s forwards;
 }
 
-.card:hover{
-transform:translateY(-5px);
+@keyframes fadeCard{
+to{opacity:1;transform:translateY(0);}
 }
+
+.card:hover{transform:translateY(-5px);}
 
 .badge{
 padding:4px 10px;
@@ -129,7 +120,6 @@ color:white;
 .mass{background:#2a9df4;}
 .dream{background:#ff9800;}
 .super{background:#e91e63;}
-
 .status-open{background:#4caf50;}
 .status-closed{background:#f44336;}
 
@@ -156,15 +146,8 @@ padding:10px;
 border-radius:8px;
 }
 
-.accordion{
-cursor:pointer;
-font-weight:600;
-}
-
-.panel{
-display:none;
-padding-top:10px;
-}
+.accordion{cursor:pointer;font-weight:600;}
+.panel{display:none;padding-top:10px;}
 
 footer{
 text-align:center;
@@ -173,6 +156,10 @@ background:#1e3c72;
 color:white;
 margin-top:40px;
 }
+
+.dark .card{background:#1e1e1e;color:white;}
+.dark .nav{background:#000;}
+.dark footer{background:#000;}
 </style>
 </head>
 
@@ -218,16 +205,27 @@ margin-top:40px;
 
 <div class="card" data-branch="CSE IT">
 <h3>Amazon <span class="badge super">Super Dream</span></h3>
-<p>Branch: CSE, IT</p>
+<p>Location: Bangalore</p>
+<p>Skills: DSA, Java, System Design</p>
+<p>Certification: AWS Preferred</p>
 <p>Min CGPA: 7.5 | No Backlogs</p>
 <p>Package: ₹34.5 LPA</p>
 </div>
 
 <div class="card" data-branch="All">
 <h3>TCS <span class="badge mass">Mass</span></h3>
-<p>Branch: All</p>
+<p>Location: PAN India</p>
+<p>Skills: Communication, Basic Coding</p>
 <p>Min CGPA: 6 | Backlogs Allowed</p>
 <p>Package: ₹3.6 LPA</p>
+</div>
+
+<div class="card" data-branch="CSE IT ECE">
+<h3>Capgemini <span class="badge dream">Dream</span></h3>
+<p>Location: Multiple</p>
+<p>Skills: Aptitude, Coding</p>
+<p>Min CGPA: 6.5 | 1 Backlog Allowed</p>
+<p>Package: ₹5 LPA</p>
 </div>
 
 </div>
@@ -239,6 +237,7 @@ margin-top:40px;
 <div class="card">
 <h3>Google Off Campus</h3>
 <p>Eligibility: 7.5 CGPA | No Active Backlogs</p>
+<p>Last Date: 30 May 2026</p>
 <span class="badge status-open">Open</span>
 <br><br>
 <button class="action">Apply Now</button>
@@ -318,16 +317,16 @@ return;
 if(cgpa>=7.5 && backlog=="no"){
 result.innerHTML="✔ Eligible for Super Dream Companies.";
 result.style.background="#4caf50";
-result.style.color="white";
-}else if(cgpa>=6){
+}
+else if(cgpa>=6){
 result.innerHTML="✔ Eligible for Mass & Dream Companies.";
 result.style.background="#4caf50";
-result.style.color="white";
-}else{
+}
+else{
 result.innerHTML="❌ Improve CGPA for better opportunities.";
 result.style.background="#f44336";
-result.style.color="white";
 }
+result.style.color="white";
 }
 
 function togglePanel(el){
@@ -335,7 +334,6 @@ let panel=el.nextElementSibling;
 panel.style.display=panel.style.display=="block"?"none":"block";
 }
 
-/* Charts */
 new Chart(document.getElementById('barChart'),{
 type:'bar',
 data:{
@@ -362,4 +360,3 @@ backgroundColor:['#1e3c72','#2a5298','#4caf50']
 
 </body>
 </html>
-
