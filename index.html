@@ -1,207 +1,209 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Amity Placement Smart Portal</title>
+<title>Amity Placement Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-body{
-    font-family: 'Segoe UI', sans-serif;
-    margin:0;
-    padding:40px;
-    background: linear-gradient(135deg,#667eea,#764ba2);
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
 }
 
-h1{
-    text-align:center;
-    color:white;
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg,#1f3c88,#39a0ed);
+    color: white;
+    animation: fadeIn 1.5s ease;
 }
 
-.container{
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    width:85%;
-    margin:auto;
-    box-shadow:0 15px 30px rgba(0,0,0,0.3);
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
 }
 
-/* GRID FIX */
-.form-grid{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:15px;
+/* STATS */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    font-weight: bold;
 }
 
-label{
-    font-weight:bold;
+/* SEARCH */
+.search-box {
+    text-align: center;
+    margin: 25px 0;
 }
 
-input,select{
-    width:100%;
-    padding:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
+input, select {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
-button{
-    margin-top:20px;
-    padding:12px;
-    background:#667eea;
-    color:white;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    transition:0.3s;
-    width:100%;
+button {
+    padding: 8px 15px;
+    border: none;
+    background: #1f3c88;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-button:hover{
-    background:#5a67d8;
-    transform:scale(1.03);
+button:hover {
+    background: #163172;
 }
 
-.result{
-    margin-top:25px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:15px;
+/* COMPANY CARD */
+.company-card {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
 }
 
-.card{
-    padding:15px;
-    border-radius:10px;
-    min-width:200px;
-    font-weight:bold;
-    animation:fadeIn 0.6s ease forwards;
-    color:white;
+.company-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
-.green{background:#2ecc71;}
-.orange{background:#f39c12;}
-.red{background:#e74c3c;}
+.top { border-left: 6px solid gold; }
+.mass { border-left: 6px solid #39a0ed; }
+.core { border-left: 6px solid green; }
 
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(20px);}
-    to{opacity:1;transform:translateY(0);}
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #1f3c88;
+    color: white;
+    margin-top: 40px;
 }
-
-/* Responsive for phone */
-@media(max-width:768px){
-    .form-grid{
-        grid-template-columns: 1fr;
-    }
-}
-
 </style>
 </head>
 
 <body>
 
-<h1>Amity University Placement Smart Portal</h1>
-
-<div class="container">
-
-<div class="form-grid">
-
-<div>
-<label>CGPA</label>
-<input type="number" id="cgpa" step="0.1">
+<div class="hero">
+    <h1>Amity University Madhya Pradesh</h1>
+    <p>Placement Intelligence Portal (Prototype)</p>
 </div>
 
-<div>
-<label>Percentage</label>
-<input type="number" id="percentage">
+<div class="stats">
+    <div>Total Companies: 5</div>
+    <div>Highest Package: ₹34.5 LPA</div>
+    <div>Mass Recruiters: 2</div>
 </div>
 
-<div>
-<label>Active Backlog</label>
-<select id="backlog">
-<option value="no">No</option>
-<option value="yes">Yes</option>
-</select>
+<!-- SEARCH -->
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search Company..." onkeyup="searchCompany()">
 </div>
 
-<div>
-<label>Branch</label>
-<select id="branch">
-<option value="CS">CS</option>
-<option value="IT">IT</option>
-<option value="ECE">ECE</option>
-<option value="Core">Core</option>
-<option value="All">All</option>
-</select>
+<!-- ELIGIBILITY CHECKER -->
+<div class="search-box">
+    <h3>Check Your Eligibility</h3>
+    <input type="number" id="cgpa" placeholder="Enter CGPA (e.g 7.5)" step="0.1">
+    <select id="backlog">
+        <option value="no">No Backlogs</option>
+        <option value="yes">Have Backlogs</option>
+    </select>
+    <button onclick="checkEligibility()">Check</button>
+    <p id="result" style="font-weight:bold;"></p>
 </div>
 
-<div>
-<label>Minimum Package (LPA)</label>
-<input type="number" id="package" value="1">
+<!-- COMPANY LIST -->
+
+<div class="company-card top">
+    <h3>Commvault</h3>
+    <p>Min CGPA: 8</p>
+    <p>No Backlogs Allowed</p>
 </div>
 
+<div class="company-card top">
+    <h3>Amazon</h3>
+    <p>Min CGPA: 7</p>
+    <p>No Backlogs Allowed</p>
 </div>
 
-<button onclick="filterCompanies()">Check Eligibility</button>
-
-<div class="result" id="result"></div>
-
+<div class="company-card mass">
+    <h3>TCS</h3>
+    <p>Min CGPA: 6</p>
+    <p>Backlogs Allowed</p>
 </div>
+
+<div class="company-card mass">
+    <h3>Accenture</h3>
+    <p>Min CGPA: 6</p>
+    <p>No Active Backlogs</p>
+</div>
+
+<div class="company-card core">
+    <h3>HDFC Bank</h3>
+    <p>Min CGPA: 6</p>
+    <p>Backlogs Allowed</p>
+</div>
+
+<footer>
+    Prototype Version | Future Scope: AI-Based Eligibility Prediction + Admin Panel
+</footer>
 
 <script>
 
-let companies = [
-{name:"Amazon",cgpa:7,percent:70,backlog:"no",branch:"CS",package:25},
-{name:"Commvault",cgpa:7.5,percent:70,backlog:"no",branch:"CS",package:34},
-{name:"Samsung R&D",cgpa:7,percent:65,backlog:"no",branch:"CS",package:12},
-{name:"Accenture",cgpa:6,percent:60,backlog:"no",branch:"All",package:4.5},
-{name:"TCS",cgpa:6,percent:60,backlog:"no",branch:"All",package:4},
-{name:"Infosys",cgpa:6,percent:60,backlog:"no",branch:"All",package:3.6},
-{name:"Flipkart",cgpa:7,percent:65,backlog:"no",branch:"CS",package:15}
-];
+function searchCompany() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let cards = document.getElementsByClassName("company-card");
 
-function filterCompanies(){
-
-let cgpa=parseFloat(document.getElementById("cgpa").value);
-let percent=parseFloat(document.getElementById("percentage").value);
-let backlog=document.getElementById("backlog").value;
-let branch=document.getElementById("branch").value;
-let minPackage=parseFloat(document.getElementById("package").value);
-
-let result=document.getElementById("result");
-result.innerHTML="";
-
-for(let i=0;i<companies.length;i++){
-
-let campusEligible=
-cgpa>=companies[i].cgpa &&
-percent>=companies[i].percent &&
-backlog==="no" &&
-(branch===companies[i].branch || companies[i].branch==="All" || branch==="All") &&
-companies[i].package>=minPackage;
-
-let offCampusEligible=
-cgpa>=companies[i].cgpa-0.5 &&
-companies[i].package>=minPackage;
-
-let card=document.createElement("div");
-card.classList.add("card");
-
-if(campusEligible){
-card.classList.add("green");
-card.innerHTML=companies[i].name+" ("+companies[i].package+" LPA) - Campus Eligible";
-}
-else if(offCampusEligible){
-card.classList.add("orange");
-card.innerHTML=companies[i].name+" - Try Off-Campus";
-}
-else{
-card.classList.add("red");
-card.innerHTML=companies[i].name+" - Not Eligible";
+    for (let i = 0; i < cards.length; i++) {
+        let name = cards[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+        cards[i].style.display = name.includes(input) ? "block" : "none";
+    }
 }
 
-result.appendChild(card);
+function checkEligibility() {
 
-}
+    let cgpa = parseFloat(document.getElementById("cgpa").value);
+    let backlog = document.getElementById("backlog").value;
 
+    if (isNaN(cgpa)) {
+        document.getElementById("result").innerText = "Please enter valid CGPA.";
+        return;
+    }
+
+    let eligibleCompanies = [];
+
+    let companies = [
+        {name:"Commvault", minCgpa:8, backlog:"no"},
+        {name:"Amazon", minCgpa:7, backlog:"no"},
+        {name:"TCS", minCgpa:6, backlog:"yes"},
+        {name:"Accenture", minCgpa:6, backlog:"no"},
+        {name:"HDFC Bank", minCgpa:6, backlog:"yes"}
+    ];
+
+    for(let i=0; i<companies.length; i++) {
+        if(cgpa >= companies[i].minCgpa) {
+            if(companies[i].backlog == "yes" || backlog == "no") {
+                eligibleCompanies.push(companies[i].name);
+            }
+        }
+    }
+
+    if(eligibleCompanies.length > 0) {
+        document.getElementById("result").innerText =
+            "You are eligible for: " + eligibleCompanies.join(", ");
+    } else {
+        document.getElementById("result").innerText =
+            "Currently not eligible for listed companies.";
+    }
 }
 
 </script>
