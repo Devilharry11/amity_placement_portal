@@ -7,84 +7,110 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+    background: #eef2f7;
 }
 
 /* HERO */
 .hero {
     text-align: center;
-    padding: 60px 20px;
-    background: linear-gradient(135deg,#1f3c88,#39a0ed);
+    padding: 70px 20px;
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
     color: white;
-    animation: fadeIn 1.5s ease;
 }
 
-@keyframes fadeIn {
-    from {opacity:0; transform: translateY(-20px);}
-    to {opacity:1; transform: translateY(0);}
+.hero h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.hero p {
+    margin-top: 10px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* CONTAINER */
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
 }
 
 /* STATS */
 .stats {
     display: flex;
-    justify-content: space-around;
-    padding: 20px;
+    justify-content: space-between;
     background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    font-weight: bold;
+    margin-top: -30px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* SEARCH */
-.search-box {
+.stat-box {
     text-align: center;
-    margin: 25px 0;
+}
+
+.stat-box h2 {
+    margin: 0;
+    color: #2a5298;
+}
+
+/* SECTION */
+.section {
+    background: white;
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
 input, select {
-    padding: 8px;
-    margin: 5px;
-    border-radius: 6px;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 15px;
 }
 
 button {
-    padding: 8px 15px;
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
     border: none;
-    background: #1f3c88;
+    background: #2a5298;
     color: white;
-    border-radius: 6px;
+    font-size: 16px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: #163172;
+    background: #1e3c72;
 }
 
 /* COMPANY CARD */
 .company-card {
-    background: white;
-    padding: 20px;
-    margin: 20px auto;
-    width: 80%;
+    padding: 15px;
+    margin-top: 15px;
     border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: 0.3s ease;
+    background: #f9fbff;
+    border-left: 5px solid #2a5298;
+    transition: 0.3s;
 }
 
 .company-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-
-.top { border-left: 6px solid gold; }
-.mass { border-left: 6px solid #39a0ed; }
-.core { border-left: 6px solid green; }
 
 footer {
     text-align: center;
     padding: 20px;
-    background: #1f3c88;
+    background: #1e3c72;
     color: white;
     margin-top: 40px;
 }
@@ -98,63 +124,73 @@ footer {
     <p>Placement Intelligence Portal (Prototype)</p>
 </div>
 
+<div class="container">
+
 <div class="stats">
-    <div>Total Companies: 5</div>
-    <div>Highest Package: ₹34.5 LPA</div>
-    <div>Mass Recruiters: 2</div>
+    <div class="stat-box">
+        <h2>5</h2>
+        <p>Total Companies</p>
+    </div>
+    <div class="stat-box">
+        <h2>₹34.5 LPA</h2>
+        <p>Highest Package</p>
+    </div>
+    <div class="stat-box">
+        <h2>2</h2>
+        <p>Mass Recruiters</p>
+    </div>
 </div>
 
-<!-- SEARCH -->
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search Company..." onkeyup="searchCompany()">
+<div class="section">
+    <h2>Search Company</h2>
+    <input type="text" id="searchInput" placeholder="Type company name..." onkeyup="searchCompany()">
 </div>
 
-<!-- ELIGIBILITY CHECKER -->
-<div class="search-box">
-    <h3>Check Your Eligibility</h3>
+<div class="section">
+    <h2>Check Your Eligibility</h2>
     <input type="number" id="cgpa" placeholder="Enter CGPA (e.g 7.5)" step="0.1">
     <select id="backlog">
         <option value="no">No Backlogs</option>
         <option value="yes">Have Backlogs</option>
     </select>
-    <button onclick="checkEligibility()">Check</button>
-    <p id="result" style="font-weight:bold;"></p>
+    <button onclick="checkEligibility()">Check Eligibility</button>
+    <p id="result" style="font-weight:bold; margin-top:15px;"></p>
 </div>
 
-<!-- COMPANY LIST -->
+<div class="section">
+    <h2>Available Companies</h2>
 
-<div class="company-card top">
-    <h3>Commvault</h3>
-    <p>Min CGPA: 8</p>
-    <p>No Backlogs Allowed</p>
+    <div class="company-card">
+        <h3>Commvault</h3>
+        <p>Min CGPA: 8 | No Backlogs</p>
+    </div>
+
+    <div class="company-card">
+        <h3>Amazon</h3>
+        <p>Min CGPA: 7 | No Backlogs</p>
+    </div>
+
+    <div class="company-card">
+        <h3>TCS</h3>
+        <p>Min CGPA: 6 | Backlogs Allowed</p>
+    </div>
+
+    <div class="company-card">
+        <h3>Accenture</h3>
+        <p>Min CGPA: 6 | No Active Backlogs</p>
+    </div>
+
+    <div class="company-card">
+        <h3>HDFC Bank</h3>
+        <p>Min CGPA: 6 | Backlogs Allowed</p>
+    </div>
+
 </div>
 
-<div class="company-card top">
-    <h3>Amazon</h3>
-    <p>Min CGPA: 7</p>
-    <p>No Backlogs Allowed</p>
-</div>
-
-<div class="company-card mass">
-    <h3>TCS</h3>
-    <p>Min CGPA: 6</p>
-    <p>Backlogs Allowed</p>
-</div>
-
-<div class="company-card mass">
-    <h3>Accenture</h3>
-    <p>Min CGPA: 6</p>
-    <p>No Active Backlogs</p>
-</div>
-
-<div class="company-card core">
-    <h3>HDFC Bank</h3>
-    <p>Min CGPA: 6</p>
-    <p>Backlogs Allowed</p>
 </div>
 
 <footer>
-    Prototype Version | Future Scope: AI-Based Eligibility Prediction + Admin Panel
+Prototype Version | Future Scope: AI-Based Eligibility + Admin Panel
 </footer>
 
 <script>
@@ -174,13 +210,6 @@ function checkEligibility() {
     let cgpa = parseFloat(document.getElementById("cgpa").value);
     let backlog = document.getElementById("backlog").value;
 
-    if (isNaN(cgpa)) {
-        document.getElementById("result").innerText = "Please enter valid CGPA.";
-        return;
-    }
-
-    let eligibleCompanies = [];
-
     let companies = [
         {name:"Commvault", minCgpa:8, backlog:"no"},
         {name:"Amazon", minCgpa:7, backlog:"no"},
@@ -189,20 +218,24 @@ function checkEligibility() {
         {name:"HDFC Bank", minCgpa:6, backlog:"yes"}
     ];
 
+    let eligible = [];
+
     for(let i=0; i<companies.length; i++) {
         if(cgpa >= companies[i].minCgpa) {
             if(companies[i].backlog == "yes" || backlog == "no") {
-                eligibleCompanies.push(companies[i].name);
+                eligible.push(companies[i].name);
             }
         }
     }
 
-    if(eligibleCompanies.length > 0) {
+    if(eligible.length > 0) {
+        document.getElementById("result").style.color = "green";
         document.getElementById("result").innerText =
-            "You are eligible for: " + eligibleCompanies.join(", ");
+        "You are eligible for: " + eligible.join(", ");
     } else {
+        document.getElementById("result").style.color = "red";
         document.getElementById("result").innerText =
-            "Currently not eligible for listed companies.";
+        "Currently not eligible for listed companies.";
     }
 }
 
@@ -210,3 +243,6 @@ function checkEligibility() {
 
 </body>
 </html>
+
+
+
