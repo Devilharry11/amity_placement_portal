@@ -1,238 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Placement Intelligence System</title>
+<title>Amity University Madhya Pradesh - Placement System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-
 body{
-background:linear-gradient(-45deg,#1e3c72,#2a5298,#4caf50,#0f2027);
-background-size:400% 400%;
-animation:gradient 12s ease infinite;
-color:#222;
-transition:0.4s;
-}
-
-@keyframes gradient{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
-
-.dark{
-background:#0f0f0f;
-color:white;
+font-family:'Inter',sans-serif;
+margin:0;
+background:#f4f6fb;
 }
 
 header{
+background:#1e3c72;
+color:white;
 padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-color:white;
-animation:fadeDown 1s ease;
-}
-
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-40px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-.hero{
 text-align:center;
-padding:40px;
-color:white;
-animation:fadeUp 1.2s ease;
 }
 
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
-}
+header h1{margin:0;font-size:20px;}
+header p{margin:5px 0 0;font-size:13px;}
 
 .container{
-max-width:1200px;
+max-width:1100px;
 margin:auto;
 padding:20px;
 }
 
 .filters{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(20px);
-padding:25px;
-border-radius:20px;
-box-shadow:0 10px 40px rgba(0,0,0,0.2);
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-margin-bottom:30px;
-animation:fadeUp 1.5s ease;
-}
-
-.filters input,.filters select{
-padding:8px;
-border-radius:10px;
-border:none;
-}
-
-.filters button{
-grid-column:span 2;
-padding:10px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:600;
-background:black;
-color:white;
-transition:0.3s;
-}
-
-.filters button:hover{
-transform:scale(1.05);
-}
-
-.company-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-}
-
-.card{
 background:white;
 padding:20px;
-border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
+border-radius:8px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;
+}
+
+input,select{
+padding:8px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+padding:8px 12px;
+border:none;
+border-radius:5px;
+background:#1e3c72;
+color:white;
+cursor:pointer;
+}
+
+.company{
+background:white;
+padding:15px;
+border-radius:8px;
+margin-bottom:15px;
+box-shadow:0 3px 10px rgba(0,0,0,0.07);
 transition:0.3s;
-transform:translateY(30px);
-opacity:0;
-animation:cardFade 0.6s forwards;
 }
 
-@keyframes cardFade{
-to{transform:translateY(0);opacity:1;}
-}
-
-.card:hover{
-transform:translateY(-8px) scale(1.03);
-box-shadow:0 15px 40px rgba(0,0,0,0.3);
+.company:hover{
+transform:translateY(-3px);
 }
 
 .badge{
-display:inline-block;
-padding:4px 10px;
-border-radius:8px;
 font-size:12px;
+padding:3px 6px;
+border-radius:4px;
+background:#1e3c72;
 color:white;
 margin-right:5px;
 }
 
-.super{background:#e91e63;}
-.dream{background:#ff9800;}
-.mass{background:#2a9df4;}
-
 .match{
-margin-top:10px;
 font-weight:600;
-color:#1e3c72;
+}
+
+.must{
+background:#fff3cd;
+padding:15px;
+border-radius:8px;
+margin-top:20px;
 }
 
 footer{
-margin-top:60px;
-background:#000;
-color:white;
 text-align:center;
-padding:25px;
+padding:20px;
+background:#1e3c72;
+color:white;
+margin-top:30px;
 }
-
-.dark .card{background:#1e1e1e;color:white;}
-.dark .filters{background:rgba(0,0,0,0.5);}
-.dark footer{background:#111;}
 </style>
 </head>
 
 <body>
 
 <header>
-<h2>Placement Intelligence System</h2>
-<button onclick="toggleDark()">🌙</button>
+<h1>Amity University Madhya Pradesh</h1>
+<p>Integrated Placement Intelligence Portal</p>
 </header>
-
-<div class="hero">
-<h1>Smart Placement Engine 🚀</h1>
-<p>Analyze • Filter • Dominate Placements</p>
-</div>
 
 <div class="container">
 
 <div class="filters">
-
-<input type="number" id="cgpa" placeholder="CGPA">
-
-<select id="backlog">
-<option value="no">No Backlog</option>
-<option value="yes">Backlog</option>
-</select>
-
+<h3>Multi Filter Engine</h3>
+<div class="grid">
+<input type="number" id="cgpa" placeholder="Your CGPA">
 <select id="branch">
 <option value="All">Branch</option>
-<option value="CSE">CSE</option>
-<option value="IT">IT</option>
-<option value="ECE">ECE</option>
+<option>CSE</option>
+<option>IT</option>
+<option>ECE</option>
 </select>
-
 <select id="spec">
 <option value="All">Specialization</option>
-<option value="AIML">AIML</option>
-<option value="Cyber">Cyber</option>
-<option value="Data">Data</option>
-<option value="Robotics">Robotics</option>
+<option>AIML</option>
+<option>Cyber</option>
+<option>Data Science</option>
+<option>Robotics</option>
 </select>
-
 <select id="skill">
-<option value="All">Skill</option>
-<option value="Java">Java</option>
-<option value="Python">Python</option>
-<option value="DSA">DSA</option>
-<option value="SQL">SQL</option>
-<option value="Cloud">Cloud</option>
-<option value="Cyber">Cyber</option>
+<option value="All">Primary Skill</option>
+<option>Java</option>
+<option>Python</option>
+<option>DSA</option>
+<option>SQL</option>
 </select>
-
+<select id="certificate">
+<option value="All">Certificate</option>
+<option>AWS</option>
+<option>Azure</option>
+<option>Google Cloud</option>
+<option>None</option>
+</select>
 <select id="type">
 <option value="All">Company Type</option>
-<option value="mass">Mass</option>
-<option value="dream">Dream</option>
-<option value="super">Super</option>
+<option>Mass</option>
+<option>Dream</option>
+<option>Super Dream</option>
 </select>
-
+<select id="campus">
+<option value="All">Campus Type</option>
+<option>On</option>
+<option>Off</option>
+</select>
 <select id="package">
-<option value="0">Package</option>
-<option value="5">5+</option>
-<option value="10">10+</option>
-<option value="20">20+</option>
+<option value="0">Min Package</option>
+<option value="5">5+ LPA</option>
+<option value="10">10+ LPA</option>
+<option value="20">20+ LPA</option>
 </select>
-
-<input type="text" id="search" placeholder="Search Company">
-
-<select id="sort">
-<option value="none">Sort</option>
-<option value="package">Package High → Low</option>
-<option value="cgpa">CGPA Low → High</option>
-</select>
-
+</div>
+<br>
 <button onclick="filterCompanies()">Apply Filters</button>
-
 </div>
 
-<div class="company-grid" id="companyList"></div>
+<div id="companyList"></div>
+
+<div class="must">
+<h3>Must Have Skills for High Placement Chances</h3>
+<ul>
+<li>Strong DSA Knowledge</li>
+<li>At least one Programming Language (Java/Python)</li>
+<li>SQL / Database Understanding</li>
+<li>One Cloud Certificate (AWS/Azure/GCP)</li>
+<li>Project with Real Problem Solving</li>
+</ul>
+</div>
 
 </div>
 
 <footer>
-<p><strong>Creator:</strong> Haridutt Sharma</p>
+<p><strong>Designer</strong></p>
+<p>Haridutt Sharma</p>
 <p>B.Tech CSE | Semester 4</p>
 <p>Amity University Madhya Pradesh</p>
 </footer>
@@ -240,76 +187,61 @@ padding:25px;
 <script>
 
 const companies=[
-{name:"Amazon",cgpa:7.5,backlog:false,branch:["CSE","IT"],spec:["AIML","Data"],skills:["Java","DSA","Cloud"],package:34,type:"super"},
-{name:"Palo Alto",cgpa:8,backlog:false,branch:["CSE"],spec:["Cyber"],skills:["Cyber","Python"],package:22,type:"super"},
-{name:"Capgemini",cgpa:6.5,backlog:true,branch:["All"],spec:["All"],skills:["Java","SQL"],package:5,type:"dream"},
-{name:"Accenture",cgpa:6,backlog:true,branch:["All"],spec:["All"],skills:["Java","Python"],package:6,type:"mass"},
-{name:"Samsung",cgpa:7.5,backlog:false,branch:["CSE","ECE"],spec:["Robotics","AIML"],skills:["C++","DSA"],package:18,type:"dream"}
+{name:"Amazon",cgpa:7.5,branch:["CSE","IT"],spec:["AIML","Data Science"],skill:"DSA",certificate:"AWS",type:"Super Dream",campus:"On",package:34},
+{name:"TCS",cgpa:6,branch:["All"],spec:["All"],skill:"Java",certificate:"None",type:"Mass",campus:"On",package:3.6},
+{name:"Accenture",cgpa:6.5,branch:["All"],spec:["All"],skill:"SQL",certificate:"None",type:"Dream",campus:"On",package:6},
+{name:"Google Off Campus",cgpa:7.5,branch:["CSE"],spec:["AIML"],skill:"DSA",certificate:"Google Cloud",type:"Super Dream",campus:"Off",package:28},
+{name:"Palo Alto",cgpa:8,branch:["CSE"],spec:["Cyber"],skill:"Python",certificate:"Azure",type:"Dream",campus:"Off",package:22}
 ];
 
-function render(list){
-let html="";
-list.forEach((c,i)=>{
-html+=`
-<div class="card" style="animation-delay:${i*0.1}s">
-<h3>${c.name}</h3>
-<span class="badge ${c.type}">${c.type.toUpperCase()}</span>
+function render(list,user){
+let container=document.getElementById("companyList");
+container.innerHTML="";
+list.forEach(c=>{
+let match=0;
+if(user.cgpa>=c.cgpa) match+=25;
+if(user.skill===c.skill) match+=25;
+if(user.certificate===c.certificate) match+=25;
+if(user.branch==="All"||c.branch.includes(user.branch)||c.branch.includes("All")) match+=25;
+
+container.innerHTML+=`
+<div class="company">
+<h4>${c.name}</h4>
+<span class="badge">${c.type}</span>
+<span class="badge">${c.campus}</span>
 <p>Min CGPA: ${c.cgpa}</p>
 <p>Package: ₹${c.package} LPA</p>
-<p>Skills: ${c.skills.join(", ")}</p>
-<div class="match">${calculateMatch(c)}% Match</div>
+<p class="match">Match Score: ${match}%</p>
 </div>`;
 });
-document.getElementById("companyList").innerHTML=html;
 }
 
-function calculateMatch(c){
-let score=0;
-let userCGPA=parseFloat(document.getElementById("cgpa").value)||0;
-let userSkill=document.getElementById("skill").value;
-
-if(userCGPA>=c.cgpa) score+=40;
-if(userSkill!="All" && c.skills.includes(userSkill)) score+=30;
-if(userCGPA>=c.cgpa+1) score+=30;
-
-return score;
-}
+render(companies,{cgpa:0,skill:"",certificate:"",branch:"All"});
 
 function filterCompanies(){
-let cgpa=parseFloat(document.getElementById("cgpa").value)||0;
-let backlog=document.getElementById("backlog").value;
-let branch=document.getElementById("branch").value;
-let spec=document.getElementById("spec").value;
-let skill=document.getElementById("skill").value;
-let type=document.getElementById("type").value;
-let pkg=parseFloat(document.getElementById("package").value);
-let search=document.getElementById("search").value.toLowerCase();
-let sort=document.getElementById("sort").value;
+let user={
+cgpa:parseFloat(document.getElementById("cgpa").value)||0,
+branch:document.getElementById("branch").value,
+spec:document.getElementById("spec").value,
+skill:document.getElementById("skill").value,
+certificate:document.getElementById("certificate").value,
+type:document.getElementById("type").value,
+campus:document.getElementById("campus").value,
+package:parseFloat(document.getElementById("package").value)
+};
 
 let filtered=companies.filter(c=>
-cgpa>=c.cgpa &&
-((backlog=="no" && !c.backlog)||(backlog=="yes")) &&
-(c.branch.includes(branch)||branch=="All"||c.branch.includes("All")) &&
-(c.spec.includes(spec)||spec=="All"||c.spec.includes("All")) &&
-(c.skills.includes(skill)||skill=="All") &&
-c.package>=pkg &&
-(c.type==type||type=="All") &&
-c.name.toLowerCase().includes(search)
+user.cgpa>=c.cgpa &&
+(user.type==="All"||c.type===user.type) &&
+(user.campus==="All"||c.campus===user.campus) &&
+(c.package>=user.package)
 );
 
-if(sort=="package"){filtered.sort((a,b)=>b.package-a.package);}
-if(sort=="cgpa"){filtered.sort((a,b)=>a.cgpa-b.cgpa);}
-
-render(filtered);
-}
-
-render(companies);
-
-function toggleDark(){
-document.body.classList.toggle("dark");
+render(filtered,user);
 }
 
 </script>
 
 </body>
+
 </html>
