@@ -1,219 +1,263 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Amity Placement Intelligence System</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Amity Placement Intelligence System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:#f4f6f9;
+}
 
-body{display:flex;background:#f4f6fb;color:#1e1e1e;}
-
-.sidebar{
-width:240px;
-background:#0f2c59;
+header{
+background:#1e3c72;
 color:white;
-min-height:100vh;
-padding:20px;
-}
-
-.sidebar h2{font-size:16px;margin-bottom:30px;}
-
-.sidebar a{
-display:block;
-color:white;
-text-decoration:none;
-padding:10px 0;
-font-size:14px;
-opacity:0.8;
-}
-
-.sidebar a:hover{opacity:1;}
-
-.main{
-flex:1;
-padding:30px;
-}
-
-.header{
+padding:18px 25px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:30px;
+}
+
+header h1{
+margin:0;
+font-size:18px;
+}
+
+button{
+cursor:pointer;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+font-weight:600;
+}
+
+.primary{
+background:#1e3c72;
+color:white;
+}
+
+.secondary{
+background:#e0e0e0;
+}
+
+.container{
+padding:30px;
+max-width:1100px;
+margin:auto;
 }
 
 .card{
 background:white;
 padding:20px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
+border-radius:8px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
 margin-bottom:20px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
 }
 
 input,select{
 width:100%;
 padding:8px;
-margin:6px 0;
+margin:8px 0;
 border-radius:6px;
 border:1px solid #ccc;
 }
 
-button{
-background:#0f2c59;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:6px;
-cursor:pointer;
-margin-top:10px;
+.hidden{
+display:none;
 }
 
-.score{
-font-size:32px;
-font-weight:700;
-color:#0f2c59;
+.badge{
+padding:4px 8px;
+border-radius:4px;
+font-size:12px;
+color:white;
 }
+
+.dream{background:#ff9800;}
+.mass{background:#2a9df4;}
+.super{background:#e91e63;}
+.open{background:#4caf50;}
+.closed{background:#f44336;}
 
 .progress{
-background:#e1e5f2;
-height:8px;
+height:10px;
+background:#ddd;
 border-radius:5px;
-margin-top:10px;
 overflow:hidden;
 }
 
 .progress-bar{
-height:8px;
-background:#0f2c59;
+height:10px;
+background:#1e3c72;
 width:0%;
 }
 
-.alert{
-background:#fff3cd;
-padding:15px;
-border-left:4px solid #ff9800;
-margin-top:10px;
-border-radius:6px;
-}
-
-.footer{
+footer{
+background:#1e3c72;
+color:white;
+text-align:center;
+padding:20px;
 margin-top:40px;
-font-size:12px;
-opacity:0.7;
 }
 </style>
 </head>
-
 <body>
 
-<div class="sidebar">
-<h2>Amity University MP</h2>
-<a href="#">Dashboard</a>
-<a href="#">Intelligence Score</a>
-<a href="#">Company Analyzer</a>
-<a href="#">Active Drives</a>
-<a href="#">Skill Gap</a>
-<a href="#">Faculty Desk</a>
-<a href="#">Safety Shield</a>
+<header>
+<h1>Amity University Madhya Pradesh | Placement Intelligence System</h1>
+<div id="authSection">
+<button class="primary" onclick="login('student')">Student Login</button>
+<button class="secondary" onclick="login('faculty')">Faculty Login</button>
 </div>
+</header>
 
-<div class="main">
+<div class="container">
 
-<div class="header">
-<h1>Placement Intelligence System</h1>
-<div>Haridutt Sharma | B.Tech CSE</div>
-</div>
+<!-- STUDENT DASHBOARD -->
+<div id="studentDashboard" class="hidden">
 
-<!-- Intelligence Engine -->
 <div class="card">
-<h3>Calculate Your Placement Intelligence Score</h3>
-
-<input type="number" id="cgpa" placeholder="CGPA">
-<select id="backlog">
-<option value="0">No Backlogs</option>
-<option value="1">Have Backlogs</option>
-</select>
-
-<input type="number" id="skills" placeholder="Number of Technical Skills">
-<input type="number" id="cert" placeholder="Number of Certifications">
+<h3>Profile Intelligence</h3>
+<input type="number" id="cgpa" placeholder="Enter CGPA">
+<input type="number" id="backlogs" placeholder="Number of Backlogs">
+<input type="text" id="skills" placeholder="Skills (comma separated)">
 <input type="number" id="projects" placeholder="Number of Projects">
-
-<button onclick="calculate()">Analyze</button>
-
-<div id="result"></div>
-<div class="progress"><div id="bar" class="progress-bar"></div></div>
-
+<button class="primary" onclick="calculateScore()">Generate Placement Score</button>
+<p id="scoreText"></p>
+<div class="progress"><div class="progress-bar" id="scoreBar"></div></div>
 </div>
 
-<!-- Active Drives -->
+<div class="card">
+<h3>Company Explorer</h3>
+<input type="text" id="search" placeholder="Search company">
+<select id="typeFilter">
+<option value="All">All Types</option>
+<option value="Dream">Dream</option>
+<option value="Mass">Mass</option>
+<option value="Super">Super Dream</option>
+</select>
+<button class="primary" onclick="filterCompanies()">Apply Filter</button>
+<div id="companyList"></div>
+</div>
+
 <div class="card">
 <h3>Active Drives</h3>
-<div class="grid">
-<div class="card">
-<strong>Accenture</strong><br>
-Min CGPA: 6.5<br>
-Deadline: 20 Oct<br>
-<button>Fill Form</button>
+<p>Amazon Drive <span class="badge open">Open</span> | Deadline: 10 Days</p>
+<p>TCS Drive <span class="badge closed">Closed</span></p>
 </div>
 
 <div class="card">
-<strong>Amazon</strong><br>
-Min CGPA: 7.5<br>
-Deadline: 25 Oct<br>
-<button>Fill Form</button>
-</div>
-</div>
+<h3>Fraud & Safety Center</h3>
+<ul>
+<li>Never pay money for job offers.</li>
+<li>Verify HR email domain.</li>
+<li>Check official website before applying.</li>
+</ul>
 </div>
 
-<!-- Fraud Shield -->
 <div class="card">
-<h3>Safety Shield</h3>
-<div class="alert">
-Never pay registration fees for internships.<br>
-Verify company domain email.<br>
-Do not share OTP or bank details.
-</div>
-</div>
-
-<div class="footer">
-Designed by Haridutt Sharma | Semester 4 | Amity University Madhya Pradesh
+<h3>Placement Analytics</h3>
+<canvas id="pieChart"></canvas>
 </div>
 
 </div>
+
+<!-- FACULTY DASHBOARD -->
+<div id="facultyDashboard" class="hidden">
+
+<div class="card">
+<h3>Faculty Control Panel</h3>
+<p>Total Students: 320</p>
+<p>Eligible Students: 210</p>
+<p>Average Package: ₹6.5 LPA</p>
+</div>
+
+<div class="card">
+<h3>Student Eligibility Filter</h3>
+<input type="number" placeholder="Minimum CGPA">
+<button class="primary">Generate Eligible List</button>
+</div>
+
+<div class="card">
+<h3>Faculty Discussion Hub</h3>
+<p>Shared Drive Links</p>
+<p>Company List Discussion</p>
+<p>Data Sharing Panel</p>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+<strong>Designer Info</strong><br>
+Haridutt Sharma<br>
+B.Tech CSE | Semester 4<br>
+Amity University Madhya Pradesh
+</footer>
 
 <script>
 
-function calculate(){
+let companies=[
+{name:"Amazon",type:"Super",minCGPA:7.5},
+{name:"TCS",type:"Mass",minCGPA:6},
+{name:"Infosys",type:"Mass",minCGPA:6},
+{name:"Palo Alto",type:"Dream",minCGPA:8}
+];
 
-let cgpa=parseFloat(document.getElementById("cgpa").value)||0;
-let backlog=document.getElementById("backlog").value;
-let skills=parseInt(document.getElementById("skills").value)||0;
-let cert=parseInt(document.getElementById("cert").value)||0;
-let projects=parseInt(document.getElementById("projects").value)||0;
-
-let score=0;
-
-score += (cgpa/10)*30;
-if(backlog=="0") score+=15;
-score += skills*5;
-score += cert*5;
-score += projects*5;
-
-if(score>100) score=100;
-
-document.getElementById("result").innerHTML=
-"<div class='score'>"+Math.round(score)+"%</div>";
-
-document.getElementById("bar").style.width=score+"%";
-
+function login(role){
+document.getElementById("authSection").style.display="none";
+if(role=="student"){
+document.getElementById("studentDashboard").classList.remove("hidden");
 }
+if(role=="faculty"){
+document.getElementById("facultyDashboard").classList.remove("hidden");
+}
+}
+
+function calculateScore(){
+let cgpa=parseFloat(document.getElementById("cgpa").value)||0;
+let back=parseInt(document.getElementById("backlogs").value)||0;
+let proj=parseInt(document.getElementById("projects").value)||0;
+
+let score=(cgpa*10)+(proj*5)-(back*5);
+if(score>100) score=100;
+if(score<0) score=0;
+
+document.getElementById("scoreText").innerHTML="Placement Readiness Score: "+score+"%";
+document.getElementById("scoreBar").style.width=score+"%";
+}
+
+function filterCompanies(){
+let search=document.getElementById("search").value.toLowerCase();
+let type=document.getElementById("typeFilter").value;
+
+let list=document.getElementById("companyList");
+list.innerHTML="";
+
+companies.forEach(c=>{
+if((c.name.toLowerCase().includes(search)) &&
+(type=="All"||c.type==type)){
+list.innerHTML+=`<p>${c.name} (${c.type}) | Min CGPA: ${c.minCGPA}</p>`;
+}
+});
+}
+
+new Chart(document.getElementById('pieChart'),{
+type:'pie',
+data:{
+labels:['Dream','Mass','Super Dream'],
+datasets:[{
+data:[5,10,3],
+backgroundColor:['#ff9800','#2a9df4','#e91e63']
+}]
+}
+});
 
 </script>
 
