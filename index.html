@@ -1,64 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Amity Placement Intelligence Portal</title>
+<title>Placement Intelligence System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
 background:linear-gradient(-45deg,#1e3c72,#2a5298,#4caf50,#0f2027);
 background-size:400% 400%;
 animation:gradient 12s ease infinite;
+color:#222;
 transition:0.4s;
 }
+
 @keyframes gradient{
 0%{background-position:0% 50%;}
 50%{background-position:100% 50%;}
 100%{background-position:0% 50%;}
 }
 
-.dark{background:#121212;color:white;}
+.dark{
+background:#0f0f0f;
+color:white;
+}
 
-.nav{
+header{
+padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#1e3c72;
-padding:15px 30px;
-color:white;
-position:sticky;
-top:0;
-z-index:1000;
-}
-
-.nav-links button{
-background:none;
-border:none;
-color:white;
-margin:0 10px;
-cursor:pointer;
-font-size:15px;
-}
-
-.nav-links button:hover{text-decoration:underline;}
-
-.toggle{
-cursor:pointer;
-background:white;
-color:black;
-padding:5px 12px;
-border-radius:20px;
-font-size:13px;
-}
-
-.hero{
-text-align:center;
-padding:80px 20px;
 color:white;
 animation:fadeDown 1s ease;
 }
@@ -68,294 +41,274 @@ from{opacity:0;transform:translateY(-40px);}
 to{opacity:1;transform:translateY(0);}
 }
 
-.hero h1{font-size:42px;margin:0;}
-.hero p{margin:15px 0;font-size:18px;}
+.hero{
+text-align:center;
+padding:40px;
+color:white;
+animation:fadeUp 1.2s ease;
+}
 
-.hero button{
-margin:10px;
-padding:10px 20px;
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.filters{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:25px;
+border-radius:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.2);
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:30px;
+animation:fadeUp 1.5s ease;
+}
+
+.filters input,.filters select{
+padding:8px;
+border-radius:10px;
 border:none;
-border-radius:8px;
+}
+
+.filters button{
+grid-column:span 2;
+padding:10px;
+border:none;
+border-radius:12px;
 cursor:pointer;
 font-weight:600;
+background:black;
+color:white;
+transition:0.3s;
 }
 
-.primary-btn{background:white;color:#1e3c72;}
-.secondary-btn{background:transparent;border:2px solid white;color:white;}
-
-.section{
-padding:50px 20px;
-max-width:1100px;
-margin:auto;
-display:none;
+.filters button:hover{
+transform:scale(1.05);
 }
 
-.active{display:block;}
+.company-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
 
 .card{
 background:white;
 padding:20px;
-margin:20px 0;
-border-radius:16px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
 transition:0.3s;
+transform:translateY(30px);
 opacity:0;
-transform:translateY(20px);
-animation:fadeCard 0.6s forwards;
+animation:cardFade 0.6s forwards;
 }
 
-@keyframes fadeCard{
-to{opacity:1;transform:translateY(0);}
+@keyframes cardFade{
+to{transform:translateY(0);opacity:1;}
 }
 
-.card:hover{transform:translateY(-5px);}
+.card:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
 
 .badge{
+display:inline-block;
 padding:4px 10px;
-border-radius:12px;
+border-radius:8px;
 font-size:12px;
 color:white;
+margin-right:5px;
 }
 
-.mass{background:#2a9df4;}
-.dream{background:#ff9800;}
 .super{background:#e91e63;}
-.status-open{background:#4caf50;}
-.status-closed{background:#f44336;}
+.dream{background:#ff9800;}
+.mass{background:#2a9df4;}
 
-input,select{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-button.action{
-background:#1e3c72;
-color:white;
-padding:10px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-.result{
+.match{
 margin-top:10px;
-padding:10px;
-border-radius:8px;
+font-weight:600;
+color:#1e3c72;
 }
-
-.accordion{cursor:pointer;font-weight:600;}
-.panel{display:none;padding-top:10px;}
 
 footer{
-text-align:center;
-padding:20px;
-background:#1e3c72;
+margin-top:60px;
+background:#000;
 color:white;
-margin-top:40px;
+text-align:center;
+padding:25px;
 }
 
 .dark .card{background:#1e1e1e;color:white;}
-.dark .nav{background:#000;}
-.dark footer{background:#000;}
+.dark .filters{background:rgba(0,0,0,0.5);}
+.dark footer{background:#111;}
 </style>
 </head>
 
 <body>
 
-<div class="nav">
-<div><strong>Placement Portal</strong></div>
-<div class="nav-links">
-<button onclick="showSection('overview')">Overview</button>
-<button onclick="showSection('oncampus')">On-Campus</button>
-<button onclick="showSection('offcampus')">Off-Campus</button>
-<button onclick="showSection('eligibility')">Eligibility</button>
-<button onclick="showSection('faculty')">Faculty</button>
-</div>
-<div class="toggle" onclick="toggleDark()">Dark Mode</div>
-</div>
+<header>
+<h2>Placement Intelligence System</h2>
+<button onclick="toggleDark()">🌙</button>
+</header>
 
 <div class="hero">
-<h1>Empowering Smart Placements</h1>
-<p>Track. Analyze. Succeed.</p>
-<button class="primary-btn" onclick="showSection('oncampus')">Explore Companies</button>
-<button class="secondary-btn" onclick="showSection('eligibility')">Check Eligibility</button>
+<h1>Smart Placement Engine 🚀</h1>
+<p>Analyze • Filter • Dominate Placements</p>
 </div>
 
-<!-- Overview -->
-<div id="overview" class="section active">
-<h2>Placement Analytics</h2>
-<canvas id="barChart"></canvas>
-<br>
-<canvas id="pieChart"></canvas>
-</div>
+<div class="container">
 
-<!-- On Campus -->
-<div id="oncampus" class="section">
-<h2>On-Campus Companies</h2>
+<div class="filters">
 
-<select onchange="filterBranch(this.value)">
-<option value="All">Filter by Branch</option>
+<input type="number" id="cgpa" placeholder="CGPA">
+
+<select id="backlog">
+<option value="no">No Backlog</option>
+<option value="yes">Backlog</option>
+</select>
+
+<select id="branch">
+<option value="All">Branch</option>
 <option value="CSE">CSE</option>
 <option value="IT">IT</option>
 <option value="ECE">ECE</option>
 </select>
 
-<div class="card" data-branch="CSE IT">
-<h3>Amazon <span class="badge super">Super Dream</span></h3>
-<p>Location: Bangalore</p>
-<p>Skills: DSA, Java, System Design</p>
-<p>Certification: AWS Preferred</p>
-<p>Min CGPA: 7.5 | No Backlogs</p>
-<p>Package: ₹34.5 LPA</p>
-</div>
-
-<div class="card" data-branch="All">
-<h3>TCS <span class="badge mass">Mass</span></h3>
-<p>Location: PAN India</p>
-<p>Skills: Communication, Basic Coding</p>
-<p>Min CGPA: 6 | Backlogs Allowed</p>
-<p>Package: ₹3.6 LPA</p>
-</div>
-
-<div class="card" data-branch="CSE IT ECE">
-<h3>Capgemini <span class="badge dream">Dream</span></h3>
-<p>Location: Multiple</p>
-<p>Skills: Aptitude, Coding</p>
-<p>Min CGPA: 6.5 | 1 Backlog Allowed</p>
-<p>Package: ₹5 LPA</p>
-</div>
-
-</div>
-
-<!-- Off Campus -->
-<div id="offcampus" class="section">
-<h2>Off-Campus Opportunities</h2>
-
-<div class="card">
-<h3>Google Off Campus</h3>
-<p>Eligibility: 7.5 CGPA | No Active Backlogs</p>
-<p>Last Date: 30 May 2026</p>
-<span class="badge status-open">Open</span>
-<br><br>
-<button class="action">Apply Now</button>
-</div>
-
-</div>
-
-<!-- Eligibility -->
-<div id="eligibility" class="section">
-<h2>Smart Eligibility Checker</h2>
-
-<input type="number" id="cgpa" placeholder="Enter CGPA">
-<select id="backlog">
-<option value="no">No Backlogs</option>
-<option value="yes">Have Backlogs</option>
+<select id="spec">
+<option value="All">Specialization</option>
+<option value="AIML">AIML</option>
+<option value="Cyber">Cyber</option>
+<option value="Data">Data</option>
+<option value="Robotics">Robotics</option>
 </select>
-<button class="action" onclick="checkEligibility()">Check</button>
-<div id="result"></div>
+
+<select id="skill">
+<option value="All">Skill</option>
+<option value="Java">Java</option>
+<option value="Python">Python</option>
+<option value="DSA">DSA</option>
+<option value="SQL">SQL</option>
+<option value="Cloud">Cloud</option>
+<option value="Cyber">Cyber</option>
+</select>
+
+<select id="type">
+<option value="All">Company Type</option>
+<option value="mass">Mass</option>
+<option value="dream">Dream</option>
+<option value="super">Super</option>
+</select>
+
+<select id="package">
+<option value="0">Package</option>
+<option value="5">5+</option>
+<option value="10">10+</option>
+<option value="20">20+</option>
+</select>
+
+<input type="text" id="search" placeholder="Search Company">
+
+<select id="sort">
+<option value="none">Sort</option>
+<option value="package">Package High → Low</option>
+<option value="cgpa">CGPA Low → High</option>
+</select>
+
+<button onclick="filterCompanies()">Apply Filters</button>
+
 </div>
 
-<!-- Faculty -->
-<div id="faculty" class="section">
-<h2>Faculty Dashboard (Prototype)</h2>
-
-<div class="card">
-<div class="accordion" onclick="togglePanel(this)">Amazon Preparation ▼</div>
-<div class="panel">
-<ul>
-<li>DSA Topics</li>
-<li>System Design Basics</li>
-<li>Mock Interview Links</li>
-</ul>
-</div>
-</div>
+<div class="company-grid" id="companyList"></div>
 
 </div>
 
 <footer>
-Placement Intelligence Portal | Frontend Prototype
+<p><strong>Creator:</strong> Haridutt Sharma</p>
+<p>B.Tech CSE | Semester 4</p>
+<p>Amity University Madhya Pradesh</p>
 </footer>
 
 <script>
-function showSection(id){
-let sections=document.querySelectorAll('.section');
-sections.forEach(sec=>sec.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-window.scrollTo({top:0,behavior:'smooth'});
+
+const companies=[
+{name:"Amazon",cgpa:7.5,backlog:false,branch:["CSE","IT"],spec:["AIML","Data"],skills:["Java","DSA","Cloud"],package:34,type:"super"},
+{name:"Palo Alto",cgpa:8,backlog:false,branch:["CSE"],spec:["Cyber"],skills:["Cyber","Python"],package:22,type:"super"},
+{name:"Capgemini",cgpa:6.5,backlog:true,branch:["All"],spec:["All"],skills:["Java","SQL"],package:5,type:"dream"},
+{name:"Accenture",cgpa:6,backlog:true,branch:["All"],spec:["All"],skills:["Java","Python"],package:6,type:"mass"},
+{name:"Samsung",cgpa:7.5,backlog:false,branch:["CSE","ECE"],spec:["Robotics","AIML"],skills:["C++","DSA"],package:18,type:"dream"}
+];
+
+function render(list){
+let html="";
+list.forEach((c,i)=>{
+html+=`
+<div class="card" style="animation-delay:${i*0.1}s">
+<h3>${c.name}</h3>
+<span class="badge ${c.type}">${c.type.toUpperCase()}</span>
+<p>Min CGPA: ${c.cgpa}</p>
+<p>Package: ₹${c.package} LPA</p>
+<p>Skills: ${c.skills.join(", ")}</p>
+<div class="match">${calculateMatch(c)}% Match</div>
+</div>`;
+});
+document.getElementById("companyList").innerHTML=html;
 }
+
+function calculateMatch(c){
+let score=0;
+let userCGPA=parseFloat(document.getElementById("cgpa").value)||0;
+let userSkill=document.getElementById("skill").value;
+
+if(userCGPA>=c.cgpa) score+=40;
+if(userSkill!="All" && c.skills.includes(userSkill)) score+=30;
+if(userCGPA>=c.cgpa+1) score+=30;
+
+return score;
+}
+
+function filterCompanies(){
+let cgpa=parseFloat(document.getElementById("cgpa").value)||0;
+let backlog=document.getElementById("backlog").value;
+let branch=document.getElementById("branch").value;
+let spec=document.getElementById("spec").value;
+let skill=document.getElementById("skill").value;
+let type=document.getElementById("type").value;
+let pkg=parseFloat(document.getElementById("package").value);
+let search=document.getElementById("search").value.toLowerCase();
+let sort=document.getElementById("sort").value;
+
+let filtered=companies.filter(c=>
+cgpa>=c.cgpa &&
+((backlog=="no" && !c.backlog)||(backlog=="yes")) &&
+(c.branch.includes(branch)||branch=="All"||c.branch.includes("All")) &&
+(c.spec.includes(spec)||spec=="All"||c.spec.includes("All")) &&
+(c.skills.includes(skill)||skill=="All") &&
+c.package>=pkg &&
+(c.type==type||type=="All") &&
+c.name.toLowerCase().includes(search)
+);
+
+if(sort=="package"){filtered.sort((a,b)=>b.package-a.package);}
+if(sort=="cgpa"){filtered.sort((a,b)=>a.cgpa-b.cgpa);}
+
+render(filtered);
+}
+
+render(companies);
 
 function toggleDark(){
 document.body.classList.toggle("dark");
 }
 
-function filterBranch(branch){
-let cards=document.querySelectorAll("#oncampus .card");
-cards.forEach(card=>{
-if(branch=="All"||card.dataset.branch.includes(branch)){
-card.style.display="block";
-}else{
-card.style.display="none";
-}
-});
-}
-
-function checkEligibility(){
-let cgpa=parseFloat(document.getElementById("cgpa").value);
-let backlog=document.getElementById("backlog").value;
-let result=document.getElementById("result");
-
-if(!cgpa){
-result.innerHTML="Please enter valid CGPA.";
-result.style.background="#f44336";
-result.style.color="white";
-return;
-}
-
-if(cgpa>=7.5 && backlog=="no"){
-result.innerHTML="✔ Eligible for Super Dream Companies.";
-result.style.background="#4caf50";
-}
-else if(cgpa>=6){
-result.innerHTML="✔ Eligible for Mass & Dream Companies.";
-result.style.background="#4caf50";
-}
-else{
-result.innerHTML="❌ Improve CGPA for better opportunities.";
-result.style.background="#f44336";
-}
-result.style.color="white";
-}
-
-function togglePanel(el){
-let panel=el.nextElementSibling;
-panel.style.display=panel.style.display=="block"?"none":"block";
-}
-
-new Chart(document.getElementById('barChart'),{
-type:'bar',
-data:{
-labels:['Dream','Mass','Super Dream'],
-datasets:[{
-label:'Companies Count',
-data:[5,10,3],
-backgroundColor:['#ff9800','#2a9df4','#e91e63']
-}]
-}
-});
-
-new Chart(document.getElementById('pieChart'),{
-type:'pie',
-data:{
-labels:['CSE','IT','ECE'],
-datasets:[{
-data:[50,30,20],
-backgroundColor:['#1e3c72','#2a5298','#4caf50']
-}]
-}
-});
 </script>
 
 </body>
