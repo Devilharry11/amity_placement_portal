@@ -4,39 +4,102 @@
 <title>Amity Placement Intelligence Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 body{
 margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#eef2f7;
+font-family:'Poppins',sans-serif;
+background:#f4f7fb;
+transition:0.3s;
+}
+
+.dark{
+background:#121212;
+color:white;
 }
 
 .nav{
 display:flex;
-justify-content:center;
-background:#1e3c72;
-padding:15px;
-gap:25px;
+justify-content:space-between;
+align-items:center;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+padding:15px 30px;
 color:white;
+position:sticky;
+top:0;
+z-index:1000;
 }
 
-.nav button{
+.nav-links button{
 background:none;
 border:none;
 color:white;
-font-size:16px;
+margin:0 10px;
 cursor:pointer;
+font-size:15px;
 }
 
-.nav button:hover{
+.nav-links button:hover{
 text-decoration:underline;
 }
 
+.toggle{
+cursor:pointer;
+background:white;
+color:black;
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+}
+
+.hero{
+text-align:center;
+padding:80px 20px;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+color:white;
+}
+
+.hero h1{
+font-size:40px;
+margin:0;
+}
+
+.hero p{
+margin:15px 0;
+font-size:18px;
+opacity:0.9;
+}
+
+.hero button{
+margin:10px;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.primary-btn{
+background:white;
+color:#1e3c72;
+}
+
+.secondary-btn{
+background:transparent;
+border:2px solid white;
+color:white;
+}
+
 .section{
-display:none;
-padding:40px;
-max-width:1000px;
+padding:50px 20px;
+max-width:1100px;
 margin:auto;
+display:none;
 }
 
 .active{
@@ -46,51 +109,61 @@ display:block;
 .card{
 background:white;
 padding:20px;
-margin:15px 0;
-border-radius:10px;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
+margin:20px 0;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
 }
 
-.stats{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
+.card:hover{
+transform:translateY(-5px);
 }
 
-.stat-box{
-flex:1;
-margin:10px;
-background:white;
-padding:20px;
-border-radius:10px;
-text-align:center;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
+.badge{
+padding:4px 10px;
+border-radius:12px;
+font-size:12px;
+color:white;
 }
+
+.mass{background:#2a9df4;}
+.dream{background:#ff9800;}
+.super{background:#e91e63;}
+
+.status-open{background:#4caf50;}
+.status-closed{background:#f44336;}
 
 input,select{
 width:100%;
 padding:10px;
 margin:8px 0;
-border-radius:6px;
+border-radius:8px;
 border:1px solid #ccc;
 }
 
 button.action{
-background:#2a5298;
+background:#1e3c72;
 color:white;
 padding:10px;
 border:none;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
 }
 
-button.action:hover{
-background:#1e3c72;
+.result{
+margin-top:10px;
+padding:10px;
+border-radius:8px;
 }
 
-.result{
-margin-top:15px;
-font-weight:bold;
+.accordion{
+cursor:pointer;
+font-weight:600;
+}
+
+.panel{
+display:none;
+padding-top:10px;
 }
 
 footer{
@@ -98,7 +171,7 @@ text-align:center;
 padding:20px;
 background:#1e3c72;
 color:white;
-margin-top:50px;
+margin-top:40px;
 }
 </style>
 </head>
@@ -106,47 +179,55 @@ margin-top:50px;
 <body>
 
 <div class="nav">
+<div><strong>Placement Portal</strong></div>
+<div class="nav-links">
 <button onclick="showSection('overview')">Overview</button>
 <button onclick="showSection('oncampus')">On-Campus</button>
 <button onclick="showSection('offcampus')">Off-Campus</button>
 <button onclick="showSection('eligibility')">Eligibility</button>
-<button onclick="showSection('faculty')">Faculty Panel</button>
+<button onclick="showSection('faculty')">Faculty</button>
+</div>
+<div class="toggle" onclick="toggleDark()">Dark Mode</div>
+</div>
+
+<div class="hero">
+<h1>Empowering Smart Placements</h1>
+<p>Track. Analyze. Succeed.</p>
+<button class="primary-btn" onclick="showSection('oncampus')">Explore Companies</button>
+<button class="secondary-btn" onclick="showSection('eligibility')">Check Eligibility</button>
 </div>
 
 <!-- Overview -->
 <div id="overview" class="section active">
-<h2>Placement Overview</h2>
-<div class="stats">
-<div class="stat-box"><h3>25+</h3><p>Companies Visited</p></div>
-<div class="stat-box"><h3>₹34.5 LPA</h3><p>Highest Package</p></div>
-<div class="stat-box"><h3>78%</h3><p>Placement Rate</p></div>
-<div class="stat-box"><h3>10+</h3><p>Mass Recruiters</p></div>
-</div>
+<h2>Placement Analytics</h2>
+<canvas id="barChart"></canvas>
+<br>
+<canvas id="pieChart"></canvas>
 </div>
 
 <!-- On Campus -->
 <div id="oncampus" class="section">
 <h2>On-Campus Companies</h2>
 
-<div class="card">
-<h3>Amazon</h3>
+<select onchange="filterBranch(this.value)">
+<option value="All">Filter by Branch</option>
+<option value="CSE">CSE</option>
+<option value="IT">IT</option>
+<option value="ECE">ECE</option>
+</select>
+
+<div class="card" data-branch="CSE IT">
+<h3>Amazon <span class="badge super">Super Dream</span></h3>
 <p>Branch: CSE, IT</p>
 <p>Min CGPA: 7.5 | No Backlogs</p>
-<p>Package: ₹34.5 LPA | Type: Super Dream</p>
+<p>Package: ₹34.5 LPA</p>
 </div>
 
-<div class="card">
-<h3>TCS</h3>
+<div class="card" data-branch="All">
+<h3>TCS <span class="badge mass">Mass</span></h3>
 <p>Branch: All</p>
 <p>Min CGPA: 6 | Backlogs Allowed</p>
-<p>Package: ₹3.6 LPA | Type: Mass Recruiter</p>
-</div>
-
-<div class="card">
-<h3>Accenture</h3>
-<p>Branch: CSE, IT, ECE</p>
-<p>Min CGPA: 6 | No Active Backlogs</p>
-<p>Package: ₹4.5 LPA | Type: Dream</p>
+<p>Package: ₹3.6 LPA</p>
 </div>
 
 </div>
@@ -156,17 +237,11 @@ margin-top:50px;
 <h2>Off-Campus Opportunities</h2>
 
 <div class="card">
-<h3>Google Off-Campus</h3>
-<p>Eligibility: 7.5 CGPA | No Active Backlog</p>
-<p>Status: Open</p>
-<a href="#">Apply Link</a>
-</div>
-
-<div class="card">
-<h3>Infosys HackWithInfy</h3>
-<p>Eligibility: 6 CGPA | Backlogs Allowed</p>
-<p>Status: Open</p>
-<a href="#">Apply Link</a>
+<h3>Google Off Campus</h3>
+<p>Eligibility: 7.5 CGPA | No Active Backlogs</p>
+<span class="badge status-open">Open</span>
+<br><br>
+<button class="action">Apply Now</button>
 </div>
 
 </div>
@@ -175,84 +250,116 @@ margin-top:50px;
 <div id="eligibility" class="section">
 <h2>Smart Eligibility Checker</h2>
 
-<select id="branch">
-<option value="CSE">CSE</option>
-<option value="IT">IT</option>
-<option value="ECE">ECE</option>
-<option value="ALL">All</option>
-</select>
-
 <input type="number" id="cgpa" placeholder="Enter CGPA">
-
 <select id="backlog">
 <option value="no">No Backlogs</option>
 <option value="yes">Have Backlogs</option>
 </select>
-
-<button class="action" onclick="checkEligibility()">Check Eligibility</button>
-
-<div id="result" class="result"></div>
+<button class="action" onclick="checkEligibility()">Check</button>
+<div id="result"></div>
 </div>
 
-<!-- Faculty Panel -->
+<!-- Faculty -->
 <div id="faculty" class="section">
 <h2>Faculty Dashboard (Prototype)</h2>
 
 <div class="card">
-<h3>Amazon Drive Preparation</h3>
+<div class="accordion" onclick="togglePanel(this)">Amazon Preparation ▼</div>
+<div class="panel">
 <ul>
-<li>Focus on DSA (Arrays, Graphs, DP)</li>
+<li>DSA Topics</li>
 <li>System Design Basics</li>
-<li>Mock Interviews</li>
-<li>LeetCode Practice Sheet</li>
+<li>Mock Interview Links</li>
 </ul>
 </div>
-
-<div class="card">
-<h3>Accenture Preparation</h3>
-<ul>
-<li>Aptitude Practice</li>
-<li>Communication Skills</li>
-<li>Basic Coding Round</li>
-</ul>
 </div>
 
-<p><strong>Future Scope:</strong> Role-based login & admin control integration.</p>
 </div>
 
 <footer>
-Amity Placement Intelligence Portal | Frontend Prototype
+Placement Intelligence Portal | Frontend Prototype
 </footer>
 
 <script>
 function showSection(id){
-let sections=document.getElementsByClassName("section");
-for(let i=0;i<sections.length;i++){
-sections[i].classList.remove("active");
+let sections=document.querySelectorAll('.section');
+sections.forEach(sec=>sec.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
 }
-document.getElementById(id).classList.add("active");
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+function filterBranch(branch){
+let cards=document.querySelectorAll("#oncampus .card");
+cards.forEach(card=>{
+if(branch=="All"||card.dataset.branch.includes(branch)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+});
 }
 
 function checkEligibility(){
-let branch=document.getElementById("branch").value;
 let cgpa=parseFloat(document.getElementById("cgpa").value);
 let backlog=document.getElementById("backlog").value;
+let result=document.getElementById("result");
 
-let message="";
+if(!cgpa){
+result.innerHTML="Please enter valid CGPA.";
+result.style.background="#f44336";
+result.style.color="white";
+return;
+}
 
 if(cgpa>=7.5 && backlog=="no"){
-message="Eligible for Amazon & other Super Dream companies.";
+result.innerHTML="✔ Eligible for Super Dream Companies.";
+result.style.background="#4caf50";
+result.style.color="white";
+}else if(cgpa>=6){
+result.innerHTML="✔ Eligible for Mass & Dream Companies.";
+result.style.background="#4caf50";
+result.style.color="white";
+}else{
+result.innerHTML="❌ Improve CGPA for better opportunities.";
+result.style.background="#f44336";
+result.style.color="white";
 }
-else if(cgpa>=6){
-message="Eligible for TCS, Accenture and Mass Recruiters.";
-}
-else{
-message="Improve CGPA for better opportunities.";
 }
 
-document.getElementById("result").innerText=message;
+function togglePanel(el){
+let panel=el.nextElementSibling;
+panel.style.display=panel.style.display=="block"?"none":"block";
 }
+
+/* Charts */
+new Chart(document.getElementById('barChart'),{
+type:'bar',
+data:{
+labels:['Dream','Mass','Super Dream'],
+datasets:[{
+label:'Companies Count',
+data:[5,10,3],
+backgroundColor:['#ff9800','#2a9df4','#e91e63']
+}]
+}
+});
+
+new Chart(document.getElementById('pieChart'),{
+type:'pie',
+data:{
+labels:['CSE','IT','ECE'],
+datasets:[{
+data:[50,30,20],
+backgroundColor:['#1e3c72','#2a5298','#4caf50']
+}]
+}
+});
 </script>
 
 </body>
 </html>
+
