@@ -1,249 +1,258 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Amity Placement Portal</title>
+<title>Amity Placement Intelligence Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #eef2f7;
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:#eef2f7;
 }
 
-/* HERO */
-.hero {
-    text-align: center;
-    padding: 70px 20px;
-    background: linear-gradient(135deg,#1e3c72,#2a5298);
-    color: white;
+.nav{
+display:flex;
+justify-content:center;
+background:#1e3c72;
+padding:15px;
+gap:25px;
+color:white;
 }
 
-.hero h1 {
-    margin: 0;
-    font-size: 34px;
+.nav button{
+background:none;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
-.hero p {
-    margin-top: 10px;
-    font-size: 18px;
-    opacity: 0.9;
+.nav button:hover{
+text-decoration:underline;
 }
 
-/* CONTAINER */
-.container {
-    width: 90%;
-    max-width: 900px;
-    margin: auto;
+.section{
+display:none;
+padding:40px;
+max-width:1000px;
+margin:auto;
 }
 
-/* STATS */
-.stats {
-    display: flex;
-    justify-content: space-between;
-    background: white;
-    margin-top: -30px;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+.active{
+display:block;
 }
 
-.stat-box {
-    text-align: center;
+.card{
+background:white;
+padding:20px;
+margin:15px 0;
+border-radius:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
-.stat-box h2 {
-    margin: 0;
-    color: #2a5298;
+.stats{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
 }
 
-/* SECTION */
-.section {
-    background: white;
-    padding: 30px;
-    margin-top: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+.stat-box{
+flex:1;
+margin:10px;
+background:white;
+padding:20px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 15px;
+input,select{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
-button {
-    margin-top: 15px;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    background: #2a5298;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
+button.action{
+background:#2a5298;
+color:white;
+padding:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
 }
 
-button:hover {
-    background: #1e3c72;
+button.action:hover{
+background:#1e3c72;
 }
 
-/* COMPANY CARD */
-.company-card {
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 10px;
-    background: #f9fbff;
-    border-left: 5px solid #2a5298;
-    transition: 0.3s;
+.result{
+margin-top:15px;
+font-weight:bold;
 }
 
-.company-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #1e3c72;
-    color: white;
-    margin-top: 40px;
+footer{
+text-align:center;
+padding:20px;
+background:#1e3c72;
+color:white;
+margin-top:50px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="hero">
-    <h1>Amity University Madhya Pradesh</h1>
-    <p>Placement Intelligence Portal (Prototype)</p>
+<div class="nav">
+<button onclick="showSection('overview')">Overview</button>
+<button onclick="showSection('oncampus')">On-Campus</button>
+<button onclick="showSection('offcampus')">Off-Campus</button>
+<button onclick="showSection('eligibility')">Eligibility</button>
+<button onclick="showSection('faculty')">Faculty Panel</button>
 </div>
 
-<div class="container">
-
+<!-- Overview -->
+<div id="overview" class="section active">
+<h2>Placement Overview</h2>
 <div class="stats">
-    <div class="stat-box">
-        <h2>5</h2>
-        <p>Total Companies</p>
-    </div>
-    <div class="stat-box">
-        <h2>₹34.5 LPA</h2>
-        <p>Highest Package</p>
-    </div>
-    <div class="stat-box">
-        <h2>2</h2>
-        <p>Mass Recruiters</p>
-    </div>
+<div class="stat-box"><h3>25+</h3><p>Companies Visited</p></div>
+<div class="stat-box"><h3>₹34.5 LPA</h3><p>Highest Package</p></div>
+<div class="stat-box"><h3>78%</h3><p>Placement Rate</p></div>
+<div class="stat-box"><h3>10+</h3><p>Mass Recruiters</p></div>
+</div>
 </div>
 
-<div class="section">
-    <h2>Search Company</h2>
-    <input type="text" id="searchInput" placeholder="Type company name..." onkeyup="searchCompany()">
+<!-- On Campus -->
+<div id="oncampus" class="section">
+<h2>On-Campus Companies</h2>
+
+<div class="card">
+<h3>Amazon</h3>
+<p>Branch: CSE, IT</p>
+<p>Min CGPA: 7.5 | No Backlogs</p>
+<p>Package: ₹34.5 LPA | Type: Super Dream</p>
 </div>
 
-<div class="section">
-    <h2>Check Your Eligibility</h2>
-    <input type="number" id="cgpa" placeholder="Enter CGPA (e.g 7.5)" step="0.1">
-    <select id="backlog">
-        <option value="no">No Backlogs</option>
-        <option value="yes">Have Backlogs</option>
-    </select>
-    <button onclick="checkEligibility()">Check Eligibility</button>
-    <p id="result" style="font-weight:bold; margin-top:15px;"></p>
+<div class="card">
+<h3>TCS</h3>
+<p>Branch: All</p>
+<p>Min CGPA: 6 | Backlogs Allowed</p>
+<p>Package: ₹3.6 LPA | Type: Mass Recruiter</p>
 </div>
 
-<div class="section">
-    <h2>Available Companies</h2>
-
-    <div class="company-card">
-        <h3>Commvault</h3>
-        <p>Min CGPA: 8 | No Backlogs</p>
-    </div>
-
-    <div class="company-card">
-        <h3>Amazon</h3>
-        <p>Min CGPA: 7 | No Backlogs</p>
-    </div>
-
-    <div class="company-card">
-        <h3>TCS</h3>
-        <p>Min CGPA: 6 | Backlogs Allowed</p>
-    </div>
-
-    <div class="company-card">
-        <h3>Accenture</h3>
-        <p>Min CGPA: 6 | No Active Backlogs</p>
-    </div>
-
-    <div class="company-card">
-        <h3>HDFC Bank</h3>
-        <p>Min CGPA: 6 | Backlogs Allowed</p>
-    </div>
+<div class="card">
+<h3>Accenture</h3>
+<p>Branch: CSE, IT, ECE</p>
+<p>Min CGPA: 6 | No Active Backlogs</p>
+<p>Package: ₹4.5 LPA | Type: Dream</p>
+</div>
 
 </div>
 
+<!-- Off Campus -->
+<div id="offcampus" class="section">
+<h2>Off-Campus Opportunities</h2>
+
+<div class="card">
+<h3>Google Off-Campus</h3>
+<p>Eligibility: 7.5 CGPA | No Active Backlog</p>
+<p>Status: Open</p>
+<a href="#">Apply Link</a>
+</div>
+
+<div class="card">
+<h3>Infosys HackWithInfy</h3>
+<p>Eligibility: 6 CGPA | Backlogs Allowed</p>
+<p>Status: Open</p>
+<a href="#">Apply Link</a>
+</div>
+
+</div>
+
+<!-- Eligibility -->
+<div id="eligibility" class="section">
+<h2>Smart Eligibility Checker</h2>
+
+<select id="branch">
+<option value="CSE">CSE</option>
+<option value="IT">IT</option>
+<option value="ECE">ECE</option>
+<option value="ALL">All</option>
+</select>
+
+<input type="number" id="cgpa" placeholder="Enter CGPA">
+
+<select id="backlog">
+<option value="no">No Backlogs</option>
+<option value="yes">Have Backlogs</option>
+</select>
+
+<button class="action" onclick="checkEligibility()">Check Eligibility</button>
+
+<div id="result" class="result"></div>
+</div>
+
+<!-- Faculty Panel -->
+<div id="faculty" class="section">
+<h2>Faculty Dashboard (Prototype)</h2>
+
+<div class="card">
+<h3>Amazon Drive Preparation</h3>
+<ul>
+<li>Focus on DSA (Arrays, Graphs, DP)</li>
+<li>System Design Basics</li>
+<li>Mock Interviews</li>
+<li>LeetCode Practice Sheet</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Accenture Preparation</h3>
+<ul>
+<li>Aptitude Practice</li>
+<li>Communication Skills</li>
+<li>Basic Coding Round</li>
+</ul>
+</div>
+
+<p><strong>Future Scope:</strong> Role-based login & admin control integration.</p>
 </div>
 
 <footer>
-Prototype Version | Future Scope: AI-Based Eligibility + Admin Panel
+Amity Placement Intelligence Portal | Frontend Prototype
 </footer>
 
 <script>
-
-function searchCompany() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let cards = document.getElementsByClassName("company-card");
-
-    for (let i = 0; i < cards.length; i++) {
-        let name = cards[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
-        cards[i].style.display = name.includes(input) ? "block" : "none";
-    }
+function showSection(id){
+let sections=document.getElementsByClassName("section");
+for(let i=0;i<sections.length;i++){
+sections[i].classList.remove("active");
+}
+document.getElementById(id).classList.add("active");
 }
 
-function checkEligibility() {
+function checkEligibility(){
+let branch=document.getElementById("branch").value;
+let cgpa=parseFloat(document.getElementById("cgpa").value);
+let backlog=document.getElementById("backlog").value;
 
-    let cgpa = parseFloat(document.getElementById("cgpa").value);
-    let backlog = document.getElementById("backlog").value;
+let message="";
 
-    let companies = [
-        {name:"Commvault", minCgpa:8, backlog:"no"},
-        {name:"Amazon", minCgpa:7, backlog:"no"},
-        {name:"TCS", minCgpa:6, backlog:"yes"},
-        {name:"Accenture", minCgpa:6, backlog:"no"},
-        {name:"HDFC Bank", minCgpa:6, backlog:"yes"}
-    ];
-
-    let eligible = [];
-
-    for(let i=0; i<companies.length; i++) {
-        if(cgpa >= companies[i].minCgpa) {
-            if(companies[i].backlog == "yes" || backlog == "no") {
-                eligible.push(companies[i].name);
-            }
-        }
-    }
-
-    if(eligible.length > 0) {
-        document.getElementById("result").style.color = "green";
-        document.getElementById("result").innerText =
-        "You are eligible for: " + eligible.join(", ");
-    } else {
-        document.getElementById("result").style.color = "red";
-        document.getElementById("result").innerText =
-        "Currently not eligible for listed companies.";
-    }
+if(cgpa>=7.5 && backlog=="no"){
+message="Eligible for Amazon & other Super Dream companies.";
+}
+else if(cgpa>=6){
+message="Eligible for TCS, Accenture and Mass Recruiters.";
+}
+else{
+message="Improve CGPA for better opportunities.";
 }
 
+document.getElementById("result").innerText=message;
+}
 </script>
 
 </body>
 </html>
-
-
-
-
